@@ -1,18 +1,24 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-Open your command-line interface (CLI) in a directory where you want to create the project. Run the following command to create a new .NET Core console project.
+Begin by creating a new .NET Core console project.
 
-```Shell
-dotnet new console -o GraphTutorial
-```
+1. Open your command-line interface (CLI) in a directory where you want to create the project. Run the following command.
 
-Once the project is created, verify that it works by changing the current directory to the **GraphTutorial** directory and running the following command in your CLI.
+    ```Shell
+    dotnet new console -o GraphTutorial
+    ```
 
-```Shell
-dotnet run
-```
+1. Once the project is created, verify that it works by changing the current directory to the **GraphTutorial** directory and running the following command in your CLI.
 
-If it works, the app should output `Hello World!`. Before moving on, add some additional dependencies that you will use later.
+    ```Shell
+    dotnet run
+    ```
+
+    If it works, the app should output `Hello World!`.
+
+## Install dependencies
+
+Before moving on, add some additional dependencies that you will use later.
 
 - [Microsoft.Extensions.Configuration](https://github.com/aspnet/Extensions) to read application configuration from a JSON file.
 - [Microsoft Authentication Library (MSAL) for .NET](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) to authenticate the user and acquire access tokens.
@@ -31,6 +37,8 @@ dotnet add package Microsoft.Graph --version 1.17.0
 ```
 
 ## Design the app
+
+In this section you will create a simple console-based menu.
 
 Open **Program.cs** and replace the `Console.WriteLine("Hello World!");` line with the following code.
 
