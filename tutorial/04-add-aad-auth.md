@@ -113,7 +113,7 @@ Consider what this code does.
   - Ensures that the token returned is always fresh by using the `AcquireTokenSilent` function, which returns the cached token if it not expired, and refreshes the token if it is expired.
 - It implements the `IAuthenticationProvider` interface so that the Graph SDK can use the class to authenticate Graph calls.
 
-## Implement sign-in
+## Sign in and display the access token
 
 In this section you will update the application to call the `GetAccessToken` function, which will sign in the user. You will also add code to display the token.
 
