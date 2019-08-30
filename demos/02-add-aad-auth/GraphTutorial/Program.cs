@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
 
 namespace GraphTutorial
 {
@@ -7,6 +9,23 @@ namespace GraphTutorial
         static void Main(string[] args)
         {
             Console.WriteLine(".NET Core Graph Tutorial\n");
+
+            var appConfig = LoadAppSettings();
+
+            if (appConfig == null)
+            {
+                Console.WriteLine("Missing or invalid appsettings.json...exiting");
+                return;
+            }
+
+            var appId = appConfig["appId"];
+            var scopes = appConfig.GetSection("scopes").Get<string[]>();
+
+            // Initialize the auth provider with values from appsettings.json
+            var authProvider = new DeviceCodeAuthProvider(appId, scopes);
+
+            // Request a token to sign in the user
+            var accessToken = authProvider.GetAccessToken().Result;
 
             int choice = -1;
 
@@ -34,6 +53,7 @@ namespace GraphTutorial
                         break;
                     case 1:
                         // Display access token
+                        Console.WriteLine($"Access token: {accessToken}\n");
                         break;
                     case 2:
                         // List the calendar
@@ -43,6 +63,24 @@ namespace GraphTutorial
                         break;
                 }
             }
+        }
+
+        static IConfigurationRoot LoadAppSettings()
+        {
+            var appConfig = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false, true)
+                .Build();
+
+            // Check for required settings
+            if (string.IsNullOrEmpty(appConfig["appId"]) ||
+                // Make sure there's at least one value in the scopes array
+                string.IsNullOrEmpty(appConfig["scopes:0"]))
+            {
+                return null;
+            }
+
+            return appConfig;
         }
     }
 }
