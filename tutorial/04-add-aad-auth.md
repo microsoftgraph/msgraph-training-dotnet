@@ -32,7 +32,6 @@ In this section you will create an authentication provider that can be used with
     using Microsoft.Graph;
     using Microsoft.Identity.Client;
     using System;
-    using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
