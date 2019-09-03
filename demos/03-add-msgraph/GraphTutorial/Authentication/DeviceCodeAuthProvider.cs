@@ -6,7 +6,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace GraphTutorial {
+namespace GraphTutorial
+{
     public class DeviceCodeAuthProvider : IAuthenticationProvider
     {
         private IPublicClientApplication _msalClient;

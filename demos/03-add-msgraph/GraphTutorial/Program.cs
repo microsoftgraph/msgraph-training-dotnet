@@ -27,6 +27,13 @@ namespace GraphTutorial
             // Request a token to sign in the user
             var accessToken = authProvider.GetAccessToken().Result;
 
+            // Initialize Graph client
+            GraphHelper.Initialize(authProvider);
+
+            // Get signed in user
+            var user = GraphHelper.GetMe().Result;
+            Console.WriteLine($"Welcome {user.DisplayName}!\n");
+
             int choice = -1;
 
             while (choice != 0) {

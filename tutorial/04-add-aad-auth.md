@@ -37,7 +37,8 @@ In this section you will create an authentication provider that can be used with
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
 
-    namespace GraphTutorial {
+    namespace GraphTutorial
+    {
         public class DeviceCodeAuthProvider : IAuthenticationProvider
         {
             private IPublicClientApplication _msalClient;
