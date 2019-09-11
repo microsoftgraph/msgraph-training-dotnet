@@ -176,6 +176,7 @@ In this section you will update the application to call the `GetAccessToken` fun
 1. Build and run the app. The application displays a URL and device code.
 
     ```Shell
+    PS C:\Source\GraphTutorial> dotnet run
     .NET Core Graph Tutorial
 
     To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code F7CG945YZ to authenticate.

@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-Begin by creating a new .NET Core console project.
+Begin by creating a new .NET Core console project using the [.NET Core CLI](/dotnet/core/tools/?tabs=netcore2x).
 
 1. Open your command-line interface (CLI) in a directory where you want to create the project. Run the following command.
 
@@ -40,7 +40,9 @@ dotnet add package Microsoft.Graph --version 1.17.0
 
 In this section you will create a simple console-based menu.
 
-Open **Program.cs** and replace the `Console.WriteLine("Hello World!");` line with the following code.
+Open **Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace the `Console.WriteLine("Hello World!");` line with the following code.
+
+[!code-csharp[](/demos/01-create-app/GraphTutorial/Program.cs)]
 
 ```csharp
 Console.WriteLine(".NET Core Graph Tutorial\n");

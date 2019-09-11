@@ -7,8 +7,6 @@ In this exercise you will incorporate the Microsoft Graph into the application. 
 1. Create a new directory in the **GraphTutorial** directory named **Graph**.
 1. Create a new file in the **Graph** directory named **GraphHelper.cs** and add the following code to that file.
 
-First, add a new class to contain all of the Graph functionality. Create a new file in the **./graphtutorial/src/main/java/com/contoso** directory named **Graph.java** and add the following code.
-
 ```csharp
 using Microsoft.Graph;
 using System;
@@ -59,7 +57,7 @@ If you run the app now, after you log in the app welcomes you by name.
 
 Add the following function to the `GraphHelper` class to get events from the user's calendar.
 
-```java
+```csharp
 public static async Task<IEnumerable<Event>> GetEventsAsync()
 {
     try
