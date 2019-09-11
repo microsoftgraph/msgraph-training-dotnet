@@ -40,48 +40,8 @@ dotnet add package Microsoft.Graph --version 1.17.0
 
 In this section you will create a simple console-based menu.
 
-Open **Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace the `Console.WriteLine("Hello World!");` line with the following code.
+Open **Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace its entire contents with the following code.
 
-[!code-csharp[](~/tutorials/dotnet-core/demos/01-create-app/GraphTutorial/Program.cs)]
-
-```csharp
-Console.WriteLine(".NET Core Graph Tutorial\n");
-
-int choice = -1;
-
-while (choice != 0) {
-    Console.WriteLine("Please choose one of the following options:");
-    Console.WriteLine("0. Exit");
-    Console.WriteLine("1. Display access token");
-    Console.WriteLine("2. List calendar events");
-
-    try
-    {
-        choice = int.Parse(Console.ReadLine());
-    }
-    catch (System.FormatException)
-    {
-        // Set to invalid value
-        choice = -1;
-    }
-
-    switch(choice)
-    {
-        case 0:
-            // Exit the program
-            Console.WriteLine("Goodbye...");
-            break;
-        case 1:
-            // Display access token
-            break;
-        case 2:
-            // List the calendar
-            break;
-        default:
-            Console.WriteLine("Invalid choice! Please try again.");
-            break;
-    }
-}
-```
+[!code-csharp[](../demos/01-create-app/GraphTutorial/Program.cs)]
 
 This implements a basic menu and reads the user's choice from the command line.
