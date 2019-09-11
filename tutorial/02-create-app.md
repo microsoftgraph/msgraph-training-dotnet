@@ -42,7 +42,7 @@ In this section you will create a simple console-based menu.
 
 Open **Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace the `Console.WriteLine("Hello World!");` line with the following code.
 
-[!code-csharp[](/demos/01-create-app/GraphTutorial/Program.cs)]
+[!code-csharp[](~/tutorials/dotnet-core/demos/01-create-app/GraphTutorial/Program.cs)]
 
 ```csharp
 Console.WriteLine(".NET Core Graph Tutorial\n");
