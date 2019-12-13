@@ -11,7 +11,7 @@ In this exercise you will create a new Azure AD application using the Azure Acti
 1. Select **New registration**. On the **Register an application** page, set the values as follows.
 
     - Set **Name** to `.NET Core Graph Tutorial`.
-    - Set **Supported account types** to **Accounts in any organizational directory**.
+    - Set **Supported account types** to **Accounts in any organizational directory and personal Microsoft accounts**.
     - Leave **Redirect URI** empty.
 
     ![A screenshot of the Register an application page](./images/aad-register-an-app.png)

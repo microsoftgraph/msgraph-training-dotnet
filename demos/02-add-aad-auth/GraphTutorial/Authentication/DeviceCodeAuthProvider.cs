@@ -22,10 +22,7 @@ namespace GraphTutorial
 
             _msalClient = PublicClientApplicationBuilder
                 .Create(appId)
-                // Set the tenant ID to "organizations" to disable personal accounts
-                // Azure OAuth does not support device code flow for personal accounts
-                // See https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code
-                .WithTenantId("organizations")
+                .WithAuthority(AadAuthorityAudience.AzureAdAndPersonalMicrosoftAccount, true)
                 .Build();
         }
 
