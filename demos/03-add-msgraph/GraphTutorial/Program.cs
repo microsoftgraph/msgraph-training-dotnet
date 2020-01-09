@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 using Microsoft.Extensions.Configuration;
 using System;
-using System.IO;
 
 namespace GraphTutorial
 {
@@ -21,7 +20,8 @@ namespace GraphTutorial
             }
 
             var appId = appConfig["appId"];
-            var scopes = appConfig.GetSection("scopes").Get<string[]>();
+            var scopesString = appConfig["scopes"];
+            var scopes = scopesString.Split(';');
 
             // Initialize the auth provider with values from appsettings.json
             var authProvider = new DeviceCodeAuthProvider(appId, scopes);
@@ -107,14 +107,12 @@ namespace GraphTutorial
         static IConfigurationRoot LoadAppSettings()
         {
             var appConfig = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", false, true)
+                .AddUserSecrets<Program>()
                 .Build();
 
             // Check for required settings
             if (string.IsNullOrEmpty(appConfig["appId"]) ||
-                // Make sure there's at least one value in the scopes array
-                string.IsNullOrEmpty(appConfig["scopes:0"]))
+                string.IsNullOrEmpty(appConfig["scopes"]))
             {
                 return null;
             }
