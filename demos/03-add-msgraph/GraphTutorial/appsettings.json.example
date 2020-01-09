@@ -1,7 +1,0 @@
-{
-  "appId": "YOUR_APP_ID_HERE",
-  "scopes": [
-    "User.Read",
-    "Calendars.Read"
-  ]
-}
