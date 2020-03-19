@@ -12,7 +12,7 @@ In this exercise you will create a new Azure AD application using the Azure Acti
 
     - Set **Name** to `.NET Core Graph Tutorial`.
     - Set **Supported account types** to **Accounts in any organizational directory and personal Microsoft accounts**.
-    - Leave **Redirect URI** empty.
+    - Under **Redirect URI**, change the dropdown to **Public client (mobile & desktop)**, and set the value to `https://login.microsoftonline.com/common/oauth2/nativeclient`.
 
     ![A screenshot of the Register an application page](./images/aad-register-an-app.png)
 
@@ -20,10 +20,6 @@ In this exercise you will create a new Azure AD application using the Azure Acti
 
     ![A screenshot of the application ID of the new app registration](./images/aad-application-id.png)
 
-1. Select the **Add a Redirect URI** link. On the **Redirect URIs** page, locate the **Suggested Redirect URIs for public clients (mobile, desktop)** section. Select the `https://login.microsoftonline.com/common/oauth2/nativeclient` URI.
-
-    ![A screenshot of the Redirect URIs page](./images/aad-redirect-uris.png)
-
-1. Locate the **Default client type** section and change the **Treat application as a public client** toggle to **Yes**, then choose **Save**.
+1. Select **Authentication** under **Manage**. Locate the **Advanced settings** section and change the **Treat application as a public client** toggle to **Yes**, then choose **Save**.
 
     ![A screenshot of the Default client type section](./images/aad-default-client-type.png)
