@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-// <ProgramSnippet>
+using Microsoft.Extensions.Configuration;
 using System;
 
 namespace GraphTutorial
@@ -11,6 +11,26 @@ namespace GraphTutorial
         static void Main(string[] args)
         {
             Console.WriteLine(".NET Core Graph Tutorial\n");
+
+            // <InitializationSnippet>
+            var appConfig = LoadAppSettings();
+
+            if (appConfig == null)
+            {
+                Console.WriteLine("Missing or invalid appsettings.json...exiting");
+                return;
+            }
+
+            var appId = appConfig["appId"];
+            var scopesString = appConfig["scopes"];
+            var scopes = scopesString.Split(';');
+
+            // Initialize the auth provider with values from appsettings.json
+            var authProvider = new DeviceCodeAuthProvider(appId, scopes);
+
+            // Request a token to sign in the user
+            var accessToken = authProvider.GetAccessToken().Result;
+            // </InitializationSnippet>
 
             int choice = -1;
 
@@ -38,6 +58,7 @@ namespace GraphTutorial
                         break;
                     case 1:
                         // Display access token
+                        Console.WriteLine($"Access token: {accessToken}\n");
                         break;
                     case 2:
                         // List the calendar
@@ -48,6 +69,23 @@ namespace GraphTutorial
                 }
             }
         }
+
+        // <LoadAppSettingsSnippet>
+        static IConfigurationRoot LoadAppSettings()
+        {
+            var appConfig = new ConfigurationBuilder()
+                .AddUserSecrets<Program>()
+                .Build();
+
+            // Check for required settings
+            if (string.IsNullOrEmpty(appConfig["appId"]) ||
+                string.IsNullOrEmpty(appConfig["scopes"]))
+            {
+                return null;
+            }
+
+            return appConfig;
+        }
+        // </LoadAppSettingsSnippet>
     }
 }
-// </ProgramSnippet>
