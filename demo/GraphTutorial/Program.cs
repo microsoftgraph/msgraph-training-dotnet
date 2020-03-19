@@ -32,6 +32,15 @@ namespace GraphTutorial
             var accessToken = authProvider.GetAccessToken().Result;
             // </InitializationSnippet>
 
+            // <GetUserSnippet>
+            // Initialize Graph client
+            GraphHelper.Initialize(authProvider);
+
+            // Get signed in user
+            var user = GraphHelper.GetMeAsync().Result;
+            Console.WriteLine($"Welcome {user.DisplayName}!\n");
+            // </GetUserSnippet>
+
             int choice = -1;
 
             while (choice != 0) {
@@ -62,6 +71,7 @@ namespace GraphTutorial
                         break;
                     case 2:
                         // List the calendar
+                        ListCalendarEvents();
                         break;
                     default:
                         Console.WriteLine("Invalid choice! Please try again.");
@@ -69,6 +79,39 @@ namespace GraphTutorial
                 }
             }
         }
+
+        // <ListEventsSnippet>
+        static void ListCalendarEvents()
+        {
+            var events = GraphHelper.GetEventsAsync().Result;
+
+            Console.WriteLine("Events:");
+
+            foreach (var calendarEvent in events)
+            {
+                Console.WriteLine($"Subject: {calendarEvent.Subject}");
+                Console.WriteLine($"  Organizer: {calendarEvent.Organizer.EmailAddress.Name}");
+                Console.WriteLine($"  Start: {FormatDateTimeTimeZone(calendarEvent.Start)}");
+                Console.WriteLine($"  End: {FormatDateTimeTimeZone(calendarEvent.End)}");
+            }
+        }
+        // </ListEventsSnippet>
+
+        // <FormatDateSnippet>
+        static string FormatDateTimeTimeZone(Microsoft.Graph.DateTimeTimeZone value)
+        {
+            // Get the timezone specified in the Graph value
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(value.TimeZone);
+            // Parse the date/time string from Graph into a DateTime
+            var dateTime = DateTime.Parse(value.DateTime);
+
+            // Create a DateTimeOffset in the specific timezone indicated by Graph
+            var dateTimeWithTZ = new DateTimeOffset(dateTime, timeZone.BaseUtcOffset)
+                .ToLocalTime();
+
+            return dateTimeWithTZ.ToString("g");
+        }
+        // <//FormatDateSnippet>
 
         // <LoadAppSettingsSnippet>
         static IConfigurationRoot LoadAppSettings()

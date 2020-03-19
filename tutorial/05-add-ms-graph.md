@@ -7,49 +7,42 @@ In this exercise you will incorporate the Microsoft Graph into the application. 
 1. Create a new directory in the **GraphTutorial** directory named **Graph**.
 1. Create a new file in the **Graph** directory named **GraphHelper.cs** and add the following code to that file.
 
-```csharp
-using Microsoft.Graph;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+    ```csharp
+    using Microsoft.Graph;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-namespace GraphTutorial
-{
-    public class GraphHelper
+    namespace GraphTutorial
     {
-        private static GraphServiceClient graphClient;
-        public static void Initialize(IAuthenticationProvider authProvider)
+        public class GraphHelper
         {
-            graphClient = new GraphServiceClient(authProvider);
-        }
-
-        public static async Task<User> GetMeAsync()
-        {
-            try
+            private static GraphServiceClient graphClient;
+            public static void Initialize(IAuthenticationProvider authProvider)
             {
-                // GET /me
-                return await graphClient.Me.Request().GetAsync();
+                graphClient = new GraphServiceClient(authProvider);
             }
-            catch (ServiceException ex)
+
+            public static async Task<User> GetMeAsync()
             {
-                Console.WriteLine($"Error getting signed-in user: {ex.Message}");
-                return null;
+                try
+                {
+                    // GET /me
+                    return await graphClient.Me.Request().GetAsync();
+                }
+                catch (ServiceException ex)
+                {
+                    Console.WriteLine($"Error getting signed-in user: {ex.Message}");
+                    return null;
+                }
             }
         }
     }
-}
-```
+    ```
 
-Add the following code in `Main` in **Program.cs** just after the `GetAccessToken` call to get the user and output the user's display name.
+1. Add the following code in `Main` in **Program.cs** just after the `GetAccessToken` call to get the user and output the user's display name.
 
-```csharp
-// Initialize Graph client
-GraphHelper.Initialize(authProvider);
-
-// Get signed in user
-var user = GraphHelper.GetMeAsync().Result;
-Console.WriteLine($"Welcome {user.DisplayName}!\n");
-```
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="GetUserSnippet":::
 
 If you run the app now, after you log in the app welcomes you by name.
 
@@ -57,28 +50,7 @@ If you run the app now, after you log in the app welcomes you by name.
 
 Add the following function to the `GraphHelper` class to get events from the user's calendar.
 
-```csharp
-public static async Task<IEnumerable<Event>> GetEventsAsync()
-{
-    try
-    {
-        // GET /me/events
-        var resultPage = await graphClient.Me.Events.Request()
-            // Only return the fields used by the application
-            .Select("subject,organizer,start,end")
-            // Sort results by when they were created, newest first
-            .OrderBy("createdDateTime DESC")
-            .GetAsync();
-
-        return resultPage.CurrentPage;
-    }
-    catch (ServiceException ex)
-    {
-        Console.WriteLine($"Error getting events: {ex.Message}");
-        return null;
-    }
-}
-```
+:::code language="csharp" source="../demo/GraphTutorial/Graph/GraphHelper.cs" id="GetEventsSnippet":::
 
 Consider what this code is doing.
 
@@ -90,46 +62,17 @@ Consider what this code is doing.
 
 1. Add the following function to the `Program` class to format the [dateTimeTimeZone](/graph/api/resources/datetimetimezone?view=graph-rest-1.0) properties from Microsoft Graph into a user-friendly format.
 
-```csharp
-static string FormatDateTimeTimeZone(Microsoft.Graph.DateTimeTimeZone value)
-{
-    // Get the timezone specified in the Graph value
-    var timeZone = TimeZoneInfo.FindSystemTimeZoneById(value.TimeZone);
-    // Parse the date/time string from Graph into a DateTime
-    var dateTime = DateTime.Parse(value.DateTime);
-
-    // Create a DateTimeOffset in the specific timezone indicated by Graph
-    var dateTimeWithTZ = new DateTimeOffset(dateTime, timeZone.BaseUtcOffset)
-        .ToLocalTime();
-
-    return dateTimeWithTZ.ToString("g");
-}
-```
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="FormatDateSnippet":::
 
 1. Add the following function to the `Program` class to get the user's events and output them to the console.
 
-```csharp
-static void ListCalendarEvents()
-{
-    var events = GraphHelper.GetEventsAsync().Result;
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="ListEventsSnippet":::
 
-    Console.WriteLine("Events:");
+1. Add the following just after the `// List the calendar` comment in the `Main` function.
 
-    foreach (var calendarEvent in events)
-    {
-        Console.WriteLine($"Subject: {calendarEvent.Subject}");
-        Console.WriteLine($"  Organizer: {calendarEvent.Organizer.EmailAddress.Name}");
-        Console.WriteLine($"  Start: {FormatDateTimeTimeZone(calendarEvent.Start)}");
-        Console.WriteLine($"  End: {FormatDateTimeTimeZone(calendarEvent.End)}");
-    }
-}
-```
-
-Finally, add the following just after the `// List the calendar` comment in the `Main` function.
-
-```csharp
-ListCalendarEvents();
-```
+    ```csharp
+    ListCalendarEvents();
+    ```
 
 Save all of your changes and run the app. Choose the **List calendar events** option to see a list of the user's events.
 
