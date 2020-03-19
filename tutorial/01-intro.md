@@ -10,7 +10,7 @@ This tutorial teaches you how to build a .NET Core console app that uses the Mic
 Before you start this tutorial, you should have the [.NET Core SDK](https://dotnet.microsoft.com/download) installed on your development machine. If you do not have the SDK or Maven, visit the previous link for download options.
 
 > [!NOTE]
-> This tutorial was written with .NET Core SDK version 2.2.401. The steps in this guide may work with other versions, but that has not been tested.
+> This tutorial was written with .NET Core SDK version 3.1.200. The steps in this guide may work with other versions, but that has not been tested.
 
 ## Feedback
 
