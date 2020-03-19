@@ -48,9 +48,9 @@ If you run the app now, after you log in the app welcomes you by name.
 
 ## Get calendar events from Outlook
 
-Add the following function to the `GraphHelper` class to get events from the user's calendar.
+1. Add the following function to the `GraphHelper` class to get events from the user's calendar.
 
-:::code language="csharp" source="../demo/GraphTutorial/Graph/GraphHelper.cs" id="GetEventsSnippet":::
+    :::code language="csharp" source="../demo/GraphTutorial/Graph/GraphHelper.cs" id="GetEventsSnippet":::
 
 Consider what this code is doing.
 
@@ -74,35 +74,35 @@ Consider what this code is doing.
     ListCalendarEvents();
     ```
 
-Save all of your changes and run the app. Choose the **List calendar events** option to see a list of the user's events.
+1. Save all of your changes and run the app. Choose the **List calendar events** option to see a list of the user's events.
 
-```Shell
-Welcome Adele Vance
+    ```Shell
+    Welcome Adele Vance
 
-Please choose one of the following options:
-0. Exit
-1. Display access token
-2. List calendar events
-2
-Events:
-Subject: Team meeting
-  Organizer: Adele Vance
-  Start: 5/22/19, 3:00 PM
-  End: 5/22/19, 4:00 PM
-Subject: Team Lunch
-  Organizer: Adele Vance
-  Start: 5/24/19, 6:30 PM
-  End: 5/24/19, 8:00 PM
-Subject: Flight to Redmond
-  Organizer: Adele Vance
-  Start: 5/26/19, 4:30 PM
-  End: 5/26/19, 7:00 PM
-Subject: Let's meet to discuss strategy
-  Organizer: Patti Fernandez
-  Start: 5/27/19, 10:00 PM
-  End: 5/27/19, 10:30 PM
-Subject: All-hands meeting
-  Organizer: Adele Vance
-  Start: 5/28/19, 3:30 PM
-  End: 5/28/19, 5:00 PM
-```
+    Please choose one of the following options:
+    0. Exit
+    1. Display access token
+    2. List calendar events
+    2
+    Events:
+    Subject: Team meeting
+      Organizer: Adele Vance
+      Start: 5/22/19, 3:00 PM
+      End: 5/22/19, 4:00 PM
+    Subject: Team Lunch
+      Organizer: Adele Vance
+      Start: 5/24/19, 6:30 PM
+      End: 5/24/19, 8:00 PM
+    Subject: Flight to Redmond
+      Organizer: Adele Vance
+      Start: 5/26/19, 4:30 PM
+      End: 5/26/19, 7:00 PM
+    Subject: Let's meet to discuss strategy
+      Organizer: Patti Fernandez
+      Start: 5/27/19, 10:00 PM
+      End: 5/27/19, 10:30 PM
+    Subject: All-hands meeting
+      Organizer: Adele Vance
+      Start: 5/28/19, 3:30 PM
+      End: 5/28/19, 5:00 PM
+    ```
