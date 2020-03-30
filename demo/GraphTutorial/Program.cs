@@ -111,7 +111,7 @@ namespace GraphTutorial
 
             return dateTimeWithTZ.ToString("g");
         }
-        // <//FormatDateSnippet>
+        // </FormatDateSnippet>
 
         // <LoadAppSettingsSnippet>
         static IConfigurationRoot LoadAppSettings()
