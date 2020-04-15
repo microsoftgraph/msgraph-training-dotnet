@@ -1,5 +1,3 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT license.
 using Microsoft.Graph;
 using System;
 using System.Collections.Generic;
@@ -29,6 +27,7 @@ namespace GraphTutorial
             }
         }
 
+        // <GetEventsSnippet>
         public static async Task<IEnumerable<Event>> GetEventsAsync()
         {
             try
@@ -36,7 +35,12 @@ namespace GraphTutorial
                 // GET /me/events
                 var resultPage = await graphClient.Me.Events.Request()
                     // Only return the fields used by the application
-                    .Select("subject,organizer,start,end")
+                    .Select(e => new {
+                      e.Subject,
+                      e.Organizer,
+                      e.Start,
+                      e.End
+                    })
                     // Sort results by when they were created, newest first
                     .OrderBy("createdDateTime DESC")
                     .GetAsync();
@@ -49,5 +53,6 @@ namespace GraphTutorial
                 return null;
             }
         }
+        // </GetEventsSnippet>
     }
 }

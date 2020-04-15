@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
+
 using Microsoft.Extensions.Configuration;
 using System;
 
@@ -11,6 +12,7 @@ namespace GraphTutorial
         {
             Console.WriteLine(".NET Core Graph Tutorial\n");
 
+            // <InitializationSnippet>
             var appConfig = LoadAppSettings();
 
             if (appConfig == null)
@@ -28,13 +30,16 @@ namespace GraphTutorial
 
             // Request a token to sign in the user
             var accessToken = authProvider.GetAccessToken().Result;
+            // </InitializationSnippet>
 
+            // <GetUserSnippet>
             // Initialize Graph client
             GraphHelper.Initialize(authProvider);
 
             // Get signed in user
             var user = GraphHelper.GetMeAsync().Result;
             Console.WriteLine($"Welcome {user.DisplayName}!\n");
+            // </GetUserSnippet>
 
             int choice = -1;
 
@@ -75,6 +80,7 @@ namespace GraphTutorial
             }
         }
 
+        // <ListEventsSnippet>
         static void ListCalendarEvents()
         {
             var events = GraphHelper.GetEventsAsync().Result;
@@ -89,7 +95,9 @@ namespace GraphTutorial
                 Console.WriteLine($"  End: {FormatDateTimeTimeZone(calendarEvent.End)}");
             }
         }
+        // </ListEventsSnippet>
 
+        // <FormatDateSnippet>
         static string FormatDateTimeTimeZone(Microsoft.Graph.DateTimeTimeZone value)
         {
             // Get the timezone specified in the Graph value
@@ -103,7 +111,9 @@ namespace GraphTutorial
 
             return dateTimeWithTZ.ToString("g");
         }
+        // </FormatDateSnippet>
 
+        // <LoadAppSettingsSnippet>
         static IConfigurationRoot LoadAppSettings()
         {
             var appConfig = new ConfigurationBuilder()
@@ -119,5 +129,6 @@ namespace GraphTutorial
 
             return appConfig;
         }
+        // </LoadAppSettingsSnippet>
     }
 }

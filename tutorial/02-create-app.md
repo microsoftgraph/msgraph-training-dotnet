@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-Begin by creating a new .NET Core console project using the [.NET Core CLI](/dotnet/core/tools/?tabs=netcore2x).
+Begin by creating a new .NET Core console project using the [.NET Core CLI](/dotnet/core/tools/).
 
 1. Open your command-line interface (CLI) in a directory where you want to create the project. Run the following command.
 
@@ -27,9 +27,9 @@ Before moving on, add some additional dependencies that you will use later.
 Run the following commands in your CLI to install the dependencies.
 
 ```Shell
-dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 3.1.0
-dotnet add package Microsoft.Identity.Client --version 4.7.1
-dotnet add package Microsoft.Graph --version 1.21.0
+dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 3.1.2
+dotnet add package Microsoft.Identity.Client --version 4.10.0
+dotnet add package Microsoft.Graph --version 3.0.1
 ```
 
 ## Design the app
@@ -38,6 +38,56 @@ In this section you will create a simple console-based menu.
 
 Open **Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace its entire contents with the following code.
 
-[!code-csharp[](../demos/01-create-app/GraphTutorial/Program.cs)]
+```csharp
+using Microsoft.Extensions.Configuration;
+using System;
+
+namespace GraphTutorial
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(".NET Core Graph Tutorial\n");
+
+            int choice = -1;
+
+            while (choice != 0) {
+                Console.WriteLine("Please choose one of the following options:");
+                Console.WriteLine("0. Exit");
+                Console.WriteLine("1. Display access token");
+                Console.WriteLine("2. List calendar events");
+
+                try
+                {
+                    choice = int.Parse(Console.ReadLine());
+                }
+                catch (System.FormatException)
+                {
+                    // Set to invalid value
+                    choice = -1;
+                }
+
+                switch(choice)
+                {
+                    case 0:
+                        // Exit the program
+                        Console.WriteLine("Goodbye...");
+                        break;
+                    case 1:
+                        // Display access token
+                        break;
+                    case 2:
+                        // List the calendar
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice! Please try again.");
+                        break;
+                }
+            }
+        }
+    }
+}
+```
 
 This implements a basic menu and reads the user's choice from the command line.
