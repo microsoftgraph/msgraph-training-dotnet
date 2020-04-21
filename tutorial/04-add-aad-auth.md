@@ -2,18 +2,18 @@
 
 In this exercise you will extend the application from the previous exercise to support authentication with Azure AD. This is required to obtain the necessary OAuth access token to call the Microsoft Graph. In this step you will integrate the [Microsoft Authentication Library (MSAL) for .NET](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) into the application.
 
-Initialize the [.NET development secret store](https://docs.microsoft.com/aspnet/core/security/app-secrets) by opening your CLI in the directory that contains **GraphTutorial.csproj** and running the following command.
+1. Initialize the [.NET development secret store](/aspnet/core/security/app-secrets) by opening your CLI in the directory that contains **GraphTutorial.csproj** and running the following command.
 
-```Shell
-dotnet user-secrets init
-```
+    ```Shell
+    dotnet user-secrets init
+    ```
 
-Next, add your application ID and a list of required scopes to the secret store using the following commands. Replace `YOUR_APP_ID_HERE` with the application ID you created in the Azure portal.
+1. Add your application ID and a list of required scopes to the secret store using the following commands. Replace `YOUR_APP_ID_HERE` with the application ID you created in the Azure portal.
 
-```Shell
-dotnet user-secrets set appId "YOUR_APP_ID_HERE"
-dotnet user-secrets set scopes "User.Read;Calendars.Read"
-```
+    ```Shell
+    dotnet user-secrets set appId "YOUR_APP_ID_HERE"
+    dotnet user-secrets set scopes "User.Read;Calendars.Read"
+    ```
 
 ## Implement sign-in
 
@@ -24,79 +24,7 @@ In this section you will create an authentication provider that can be used with
 1. Create a new directory in the **GraphTutorial** directory named **Authentication**.
 1. Create a new file in the **Authentication** directory named **DeviceCodeAuthProvider.cs** and add the following code to that file.
 
-    ```csharp
-    using Microsoft.Graph;
-    using Microsoft.Identity.Client;
-    using System;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading.Tasks;
-
-    namespace GraphTutorial
-    {
-        public class DeviceCodeAuthProvider : IAuthenticationProvider
-        {
-            private IPublicClientApplication _msalClient;
-            private string[] _scopes;
-            private IAccount _userAccount;
-
-            public DeviceCodeAuthProvider(string appId, string[] scopes)
-            {
-                _scopes = scopes;
-
-                _msalClient = PublicClientApplicationBuilder
-                    .Create(appId)
-                    .WithAuthority(AadAuthorityAudience.AzureAdAndPersonalMicrosoftAccount, true)
-                    .Build();
-            }
-
-            public async Task<string> GetAccessToken()
-            {
-                // If there is no saved user account, the user must sign-in
-                if (_userAccount == null)
-                {
-                    try
-                    {
-                        // Invoke device code flow so user can sign-in with a browser
-                        var result = await _msalClient.AcquireTokenWithDeviceCode(_scopes, callback => {
-                            Console.WriteLine(callback.Message);
-                            return Task.FromResult(0);
-                        }).ExecuteAsync();
-
-                        _userAccount = result.Account;
-                        return result.AccessToken;
-                    }
-                    catch (Exception exception)
-                    {
-                        Console.WriteLine($"Error getting access token: {exception.Message}");
-                        return null;
-                    }
-                }
-                else
-                {
-                    // If there is an account, call AcquireTokenSilent
-                    // By doing this, MSAL will refresh the token automatically if
-                    // it is expired. Otherwise it returns the cached token.
-
-                        var result = await _msalClient
-                            .AcquireTokenSilent(_scopes, _userAccount)
-                            .ExecuteAsync();
-
-                       return result.AccessToken;
-                }
-            }
-
-            // This is the required function to implement IAuthenticationProvider
-            // The Graph SDK will call this function each time it makes a Graph
-            // call.
-            public async Task AuthenticateRequestAsync(HttpRequestMessage requestMessage)
-            {
-                requestMessage.Headers.Authorization =
-                    new AuthenticationHeaderValue("bearer", await GetAccessToken());
-            }
-        }
-    }
-    ```
+    :::code language="csharp" source="../demo/GraphTutorial/Authentication/DeviceCodeAuthProvider.cs" id="AuthProviderSnippet":::
 
 Consider what this code does.
 
@@ -110,53 +38,13 @@ Consider what this code does.
 
 In this section you will update the application to call the `GetAccessToken` function, which will sign in the user. You will also add code to display the token.
 
-1. Open **Program.cs** and add the following `using` statements to the top of the file.
-
-    ```csharp
-    using Microsoft.Extensions.Configuration;
-    ```
-
 1. Add the following function to the `Program` class.
 
-    ```csharp
-    static IConfigurationRoot LoadAppSettings()
-    {
-        var appConfig = new ConfigurationBuilder()
-            .AddUserSecrets<Program>()
-            .Build();
-
-        // Check for required settings
-        if (string.IsNullOrEmpty(appConfig["appId"]) ||
-            string.IsNullOrEmpty(appConfig["scopes"]))
-        {
-            return null;
-        }
-
-        return appConfig;
-    }
-    ```
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="LoadAppSettingsSnippet":::
 
 1. Add the following code to the `Main` function immediately after the `Console.WriteLine(".NET Core Graph Tutorial\n");` line.
 
-    ```csharp
-    var appConfig = LoadAppSettings();
-
-    if (appConfig == null)
-    {
-        Console.WriteLine("Missing or invalid appsettings.json...exiting");
-        return;
-    }
-
-    var appId = appConfig["appId"];
-    var scopesString = appConfig["scopes"];
-    var scopes = scopesString.Split(';');
-
-    // Initialize the auth provider with values from appsettings.json
-    var authProvider = new DeviceCodeAuthProvider(appId, scopes);
-
-    // Request a token to sign in the user
-    var accessToken = authProvider.GetAccessToken().Result;
-    ```
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="InitializationSnippet":::
 
 1. Add the following code to the `Main` function immediately after the `// Display access token` line.
 
@@ -174,6 +62,6 @@ In this section you will update the application to call the `GetAccessToken` fun
     ```
 
     > [!TIP]
-    > If you encounter errors, compare your **Program.cs** with the [example on GitHub](https://github.com/microsoftgraph/msgraph-training-dotnet-core/blob/master/demos/01-create-app/GraphTutorial/Program.cs).
+    > If you encounter errors, compare your **Program.cs** with the [example on GitHub](https://github.com/microsoftgraph/msgraph-training-dotnet-core/blob/master/demo/GraphTutorial/Program.cs).
 
 1. Open a browser and browse to the URL displayed. Enter the provided code and sign in. Once completed, return to the application and choose the **1. Display access token** option to display the access token.

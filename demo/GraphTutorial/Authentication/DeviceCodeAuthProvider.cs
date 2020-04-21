@@ -1,5 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
+
+// <AuthProviderSnippet>
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
 using System;
@@ -57,12 +59,12 @@ namespace GraphTutorial
                         .AcquireTokenSilent(_scopes, _userAccount)
                         .ExecuteAsync();
 
-                   return result.AccessToken;
+                    return result.AccessToken;
             }
         }
 
-        // This is the required method to implement IAuthenticationProvider
-        // The Graph SDK will call this method each time it makes a Graph
+        // This is the required function to implement IAuthenticationProvider
+        // The Graph SDK will call this function each time it makes a Graph
         // call.
         public async Task AuthenticateRequestAsync(HttpRequestMessage requestMessage)
         {
@@ -71,3 +73,4 @@ namespace GraphTutorial
         }
     }
 }
+// </AuthProviderSnippet>

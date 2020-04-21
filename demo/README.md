@@ -39,9 +39,18 @@ If you don't have a Microsoft account, you can [sign up for the Office 365 Devel
 
 ## Configure the sample
 
-1. Rename the `appsettings.json.example` file to `appsettings.json`.
-1. Edit the `appsettings.json` file and make the following changes.
-    1. Replace `YOUR_APP_ID_HERE` with the **Application Id** you got from the App Registration Portal.
+1. Initialize the [.NET development secret store](https://docs.microsoft.com/aspnet/core/security/app-secrets) by opening your CLI in the directory that contains **GraphTutorial.csproj** and running the following command.
+
+    ```Shell
+    dotnet user-secrets init
+    ```
+
+1. Add your application ID and a list of required scopes to the secret store using the following commands. Replace `YOUR_APP_ID_HERE` with the application ID you created in the Azure portal.
+
+    ```Shell
+    dotnet user-secrets set appId "YOUR_APP_ID_HERE"
+    dotnet user-secrets set scopes "User.Read;Calendars.Read"
+    ```
 
 ## Build and run the sample
 
