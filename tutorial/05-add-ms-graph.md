@@ -46,7 +46,7 @@ In this exercise you will incorporate the Microsoft Graph into the application. 
     }
     ```
 
-1. Add the following code in `Main` in **Program.cs** just after the `GetAccessToken` call to get the user and output the user's display name.
+1. Add the following code in `Main` in **./Program.cs** just after the `GetAccessToken` call to get the user and output the user's display name.
 
     :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="GetUserSnippet":::
 

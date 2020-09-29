@@ -38,7 +38,7 @@ dotnet add package TimeZoneConverter
 
 In this section you will create a simple console-based menu.
 
-Open **Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace its entire contents with the following code.
+Open **./Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace its entire contents with the following code.
 
 ```csharp
 using Microsoft.Extensions.Configuration;
