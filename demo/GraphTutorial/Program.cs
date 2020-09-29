@@ -72,7 +72,10 @@ namespace GraphTutorial
                         break;
                     case 2:
                         // List the calendar
-                        ListCalendarEvents();
+                        ListCalendarEvents(
+                            user.MailboxSettings.TimeZone,
+                            $"{user.MailboxSettings.DateFormat} {user.MailboxSettings.TimeFormat}"
+                        );
                         break;
                     case 3:
                         // Create a new event
@@ -85,9 +88,11 @@ namespace GraphTutorial
         }
 
         // <ListEventsSnippet>
-        static void ListCalendarEvents()
+        static void ListCalendarEvents(string userTimeZone, string dateTimeFormat)
         {
-            var events = GraphHelper.GetEventsAsync().Result;
+            var events = GraphHelper
+                .GetCurrentWeekCalendarViewAsync(DateTime.Today, userTimeZone)
+                .Result;
 
             Console.WriteLine("Events:");
 
@@ -95,25 +100,21 @@ namespace GraphTutorial
             {
                 Console.WriteLine($"Subject: {calendarEvent.Subject}");
                 Console.WriteLine($"  Organizer: {calendarEvent.Organizer.EmailAddress.Name}");
-                Console.WriteLine($"  Start: {FormatDateTimeTimeZone(calendarEvent.Start)}");
-                Console.WriteLine($"  End: {FormatDateTimeTimeZone(calendarEvent.End)}");
+                Console.WriteLine($"  Start: {FormatDateTimeTimeZone(calendarEvent.Start, dateTimeFormat)}");
+                Console.WriteLine($"  End: {FormatDateTimeTimeZone(calendarEvent.End, dateTimeFormat)}");
             }
         }
         // </ListEventsSnippet>
 
         // <FormatDateSnippet>
-        static string FormatDateTimeTimeZone(Microsoft.Graph.DateTimeTimeZone value)
+        static string FormatDateTimeTimeZone(
+            Microsoft.Graph.DateTimeTimeZone value,
+            string dateTimeFormat)
         {
-            // Get the timezone specified in the Graph value
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(value.TimeZone);
             // Parse the date/time string from Graph into a DateTime
             var dateTime = DateTime.Parse(value.DateTime);
 
-            // Create a DateTimeOffset in the specific timezone indicated by Graph
-            var dateTimeWithTZ = new DateTimeOffset(dateTime, timeZone.BaseUtcOffset)
-                .ToLocalTime();
-
-            return dateTimeWithTZ.ToString("g");
+            return dateTime.ToString(dateTimeFormat);
         }
         // </FormatDateSnippet>
 
