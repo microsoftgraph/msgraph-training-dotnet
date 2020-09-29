@@ -4,7 +4,7 @@
 
 To run the completed project in this folder, you need the following:
 
-- The [.NET Core SDK](https://dotnet.microsoft.com/download) installed on your development machine. (**Note:** This tutorial was written with .NET Core SDK version 2.2.401. The steps in this guide may work with other versions, but that has not been tested.)
+- The [.NET Core SDK](https://dotnet.microsoft.com/download) installed on your development machine. (**Note:** This tutorial was written with .NET Core SDK version 3.1.402. The steps in this guide may work with other versions, but that has not been tested.)
 - A Microsoft work or school account.
 
 If you don't have a Microsoft account, you can [sign up for the Office 365 Developer Program](https://developer.microsoft.com/office/dev-program) to get a free Office 365 subscription.
