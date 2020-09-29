@@ -47,7 +47,8 @@ namespace GraphTutorial
                 Console.WriteLine("Please choose one of the following options:");
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Display access token");
-                Console.WriteLine("2. List calendar events");
+                Console.WriteLine("2. View this week's calendar");
+                Console.WriteLine("3. Add an event");
 
                 try
                 {
@@ -72,6 +73,9 @@ namespace GraphTutorial
                     case 2:
                         // List the calendar
                         ListCalendarEvents();
+                        break;
+                    case 3:
+                        // Create a new event
                         break;
                     default:
                         Console.WriteLine("Invalid choice! Please try again.");
