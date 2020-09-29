@@ -43,6 +43,7 @@ Open **Program.cs** in a text editor (such as [Visual Studio Code](https://code.
 ```csharp
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace GraphTutorial
 {

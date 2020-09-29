@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace GraphTutorial
 {
@@ -79,6 +80,7 @@ namespace GraphTutorial
                         break;
                     case 3:
                         // Create a new event
+                        CreateEvent(user.MailboxSettings.TimeZone);
                         break;
                     default:
                         Console.WriteLine("Invalid choice! Please try again.");
@@ -117,6 +119,125 @@ namespace GraphTutorial
             return dateTime.ToString(dateTimeFormat);
         }
         // </FormatDateSnippet>
+
+        // <CreateEventSnippet>
+        static void CreateEvent(string userTimeZone)
+        {
+            // Prompt user for info
+
+            // Require a subject
+            var subject = GetUserInput("subject", true,
+                (input) => {
+                    return GetUserYesNo($"Subject: {input} - is that right?");
+                });
+
+            // Attendees are optional
+            var attendeeList = new List<string>();
+            if (GetUserYesNo("Do you want to invite attendees?"))
+            {
+                string attendee = null;
+
+                do
+                {
+                    attendee = GetUserInput("attendee", false,
+                        (input) => {
+                            return GetUserYesNo($"{input} - add attendee?");
+                        });
+
+                    if (!string.IsNullOrEmpty(attendee))
+                    {
+                        attendeeList.Add(attendee);
+                    }
+                }
+                while (!string.IsNullOrEmpty(attendee));
+            }
+
+            var startString = GetUserInput("event start", true,
+                (input) => {
+                    // Validate that input is a date
+                    return (DateTime.TryParse(input, out var result));
+                });
+
+            var start = DateTime.Parse(startString);
+
+            var endString = GetUserInput("event end", true,
+                (input) => {
+                    // Validate that input is a date
+                    // and is later than start
+                    return (DateTime.TryParse(input, out var result) &&
+                        result.CompareTo(start) > 0);
+                });
+
+            var end = DateTime.Parse(endString);
+
+            var body = GetUserInput("body", false,
+                (input => { return true; }));
+
+            Console.WriteLine($"Subject: {subject}");
+            Console.WriteLine($"Attendees: {string.Join(";", attendeeList)}");
+            Console.WriteLine($"Start: {start.ToString()}");
+            Console.WriteLine($"End: {end.ToString()}");
+            Console.WriteLine($"Body: {body}");
+            if (GetUserYesNo("Create event?"))
+            {
+                GraphHelper.CreateEvent(
+                    userTimeZone,
+                    subject,
+                    start,
+                    end,
+                    attendeeList,
+                    body).Wait();
+            }
+            else
+            {
+                Console.WriteLine("Canceled.");
+            }
+        }
+        // </CreateEventSnippet>
+
+        // <UserInputSnippet>
+        static bool GetUserYesNo(string prompt)
+        {
+            Console.Write($"{prompt} (y/n)");
+            ConsoleKeyInfo confirm;
+            do
+            {
+                confirm = Console.ReadKey(true);
+            }
+            while (confirm.Key != ConsoleKey.Y && confirm.Key != ConsoleKey.N);
+
+            Console.WriteLine();
+            return (confirm.Key == ConsoleKey.Y);
+        }
+
+        static string GetUserInput(
+            string fieldName,
+            bool isRequired,
+            Func<string, bool> validate)
+        {
+            string returnValue = null;
+            do
+            {
+                Console.Write($"Enter a {fieldName}: ");
+                if (!isRequired)
+                {
+                    Console.Write("(ENTER to skip) ");
+                }
+                var input = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(input))
+                {
+                    if (validate.Invoke(input))
+                    {
+                        returnValue = input;
+                    }
+                }
+            }
+            while (string.IsNullOrEmpty(returnValue) && isRequired);
+
+            return returnValue;
+        }
+        // </UserInputSnippet>
 
         // <LoadAppSettingsSnippet>
         static IConfigurationRoot LoadAppSettings()

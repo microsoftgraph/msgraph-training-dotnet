@@ -86,7 +86,7 @@ Consider what this code is doing.
     );
     ```
 
-1. Save all of your changes and run the app. Choose the **List calendar events** option to see a list of the user's events.
+1. Save all of your changes and run the app. Choose the **View this week's calendar** option to see a list of the user's events.
 
     ```Shell
     Welcome Lynne Robbins!

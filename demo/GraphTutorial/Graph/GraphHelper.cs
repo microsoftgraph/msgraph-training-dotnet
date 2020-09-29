@@ -98,5 +98,81 @@ namespace GraphTutorial
             return TimeZoneInfo.ConvertTimeToUtc(unspecifiedStart, userTimeZone);
         }
         // </GetEventsSnippet>
+
+        // <CreateEventSnippet>
+        public static async Task CreateEvent(
+            string timeZone,
+            string subject,
+            DateTime start,
+            DateTime end,
+            List<string> attendees,
+            string body = null)
+        {
+            // Create a new Event object with required
+            // values
+            var newEvent = new Event
+            {
+                Subject = subject,
+                Start = new DateTimeTimeZone
+                {
+                    DateTime = start.ToString("o"),
+                    // Set to the user's time zone
+                    TimeZone = timeZone
+                },
+                End = new DateTimeTimeZone
+                {
+                    DateTime = end.ToString("o"),
+                    // Set to the user's time zone
+                    TimeZone = timeZone
+                }
+            };
+
+            // Only add attendees if there are actual
+            // values
+            if (attendees.Count > 0)
+            {
+                var requiredAttendees = new List<Attendee>();
+
+                foreach(var email in attendees)
+                {
+                    requiredAttendees.Add(new Attendee
+                    {
+                        Type = AttendeeType.Required,
+                        EmailAddress = new EmailAddress
+                        {
+                            Address = email
+                        }
+                    });
+                }
+
+                newEvent.Attendees = requiredAttendees;
+            }
+
+            // Only add a body if a body was supplied
+            if (!string.IsNullOrEmpty(body))
+            {
+                newEvent.Body = new ItemBody
+                {
+                    Content = body,
+                    ContentType = BodyType.Text
+                };
+            }
+
+            try
+            {
+                // POST /me/events
+                await graphClient.Me
+                    .Events
+                    .Request()
+                    .AddAsync(newEvent);
+
+                Console.WriteLine("Event added to calendar.");
+            }
+            catch (ServiceException ex)
+            {
+                Console.WriteLine($"Error creating event: {ex.Message}");
+            }
+        }
+        // </CreateEventSnippet>
     }
 }
