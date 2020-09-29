@@ -9,5 +9,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.8" />
     <PackageReference Include="Microsoft.Graph" Version="3.15.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.19.0" />
+    <PackageReference Include="TimeZoneConverter" Version="3.3.0" />
   </ItemGroup>
 </Project>

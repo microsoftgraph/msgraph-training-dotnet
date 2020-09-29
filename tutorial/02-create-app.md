@@ -23,6 +23,7 @@ Before moving on, add some additional dependencies that you will use later.
 - [Microsoft.Extensions.Configuration.UserSecrets](https://github.com/aspnet/extensions) to read application configuration from the [.NET development secret store](https://docs.microsoft.com/aspnet/core/security/app-secrets).
 - [Microsoft Authentication Library (MSAL) for .NET](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) to authenticate the user and acquire access tokens.
 - [Microsoft Graph .NET Client Library](https://github.com/microsoftgraph/msgraph-sdk-dotnet) to make calls to the Microsoft Graph.
+- [TimeZoneConverter](https://github.com/mj1856/TimeZoneConverter) for translating Windows time zone identifiers to IANA identifiers.
 
 Run the following commands in your CLI to install the dependencies.
 
@@ -30,6 +31,7 @@ Run the following commands in your CLI to install the dependencies.
 dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 3.1.8
 dotnet add package Microsoft.Identity.Client --version 4.19.0
 dotnet add package Microsoft.Graph --version 3.15.0
+dotnet add package TimeZoneConverter
 ```
 
 ## Design the app
