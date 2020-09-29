@@ -27,9 +27,9 @@ Before moving on, add some additional dependencies that you will use later.
 Run the following commands in your CLI to install the dependencies.
 
 ```Shell
-dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 3.1.2
-dotnet add package Microsoft.Identity.Client --version 4.10.0
-dotnet add package Microsoft.Graph --version 3.0.1
+dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 3.1.8
+dotnet add package Microsoft.Identity.Client --version 4.19.0
+dotnet add package Microsoft.Graph --version 3.15.0
 ```
 
 ## Design the app
