@@ -12,8 +12,14 @@ In this exercise you will extend the application from the previous exercise to s
 
     ```Shell
     dotnet user-secrets set appId "YOUR_APP_ID_HERE"
-    dotnet user-secrets set scopes "User.Read;Calendars.Read"
+    dotnet user-secrets set scopes "User.Read;MailboxSettings.Read;Calendars.ReadWrite"
     ```
+
+    Let's look at the permission scopes you just set.
+
+    - **User.Read** will allow the app to read the signed-in user's profile to get information such as display name and email address.
+    - **MailboxSettings.Read** will allow the app to read the user's preferred time zone, date format, and time format.
+    - **Calendars.ReadWrite** will allow the app to read the existing events on the user's calendar and add new events.
 
 ## Implement sign-in
 

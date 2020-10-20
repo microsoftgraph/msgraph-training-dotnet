@@ -23,24 +23,27 @@ Before moving on, add some additional dependencies that you will use later.
 - [Microsoft.Extensions.Configuration.UserSecrets](https://github.com/aspnet/extensions) to read application configuration from the [.NET development secret store](https://docs.microsoft.com/aspnet/core/security/app-secrets).
 - [Microsoft Authentication Library (MSAL) for .NET](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) to authenticate the user and acquire access tokens.
 - [Microsoft Graph .NET Client Library](https://github.com/microsoftgraph/msgraph-sdk-dotnet) to make calls to the Microsoft Graph.
+- [TimeZoneConverter](https://github.com/mj1856/TimeZoneConverter) for translating Windows time zone identifiers to IANA identifiers.
 
 Run the following commands in your CLI to install the dependencies.
 
 ```Shell
-dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 3.1.2
-dotnet add package Microsoft.Identity.Client --version 4.10.0
-dotnet add package Microsoft.Graph --version 3.0.1
+dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 3.1.8
+dotnet add package Microsoft.Identity.Client --version 4.19.0
+dotnet add package Microsoft.Graph --version 3.15.0
+dotnet add package TimeZoneConverter
 ```
 
 ## Design the app
 
 In this section you will create a simple console-based menu.
 
-Open **Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace its entire contents with the following code.
+Open **./Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace its entire contents with the following code.
 
 ```csharp
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace GraphTutorial
 {
@@ -56,7 +59,8 @@ namespace GraphTutorial
                 Console.WriteLine("Please choose one of the following options:");
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Display access token");
-                Console.WriteLine("2. List calendar events");
+                Console.WriteLine("2. View this week's calendar");
+                Console.WriteLine("3. Add an event");
 
                 try
                 {
@@ -79,6 +83,9 @@ namespace GraphTutorial
                         break;
                     case 2:
                         // List the calendar
+                        break;
+                    case 3:
+                        // Create a new event
                         break;
                     default:
                         Console.WriteLine("Invalid choice! Please try again.");
