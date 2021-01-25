@@ -12,6 +12,7 @@ In this exercise you will incorporate the Microsoft Graph into the application. 
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using TimeZoneConverter;
 
     namespace GraphTutorial
     {
