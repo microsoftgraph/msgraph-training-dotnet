@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace GraphTutorial
 {
@@ -26,17 +27,16 @@ namespace GraphTutorial
             var scopesString = appConfig["scopes"];
             var scopes = scopesString.Split(';');
 
-            // Initialize the auth provider with values from appsettings.json
-            var authProvider = new DeviceCodeAuthProvider(appId, scopes);
+            // Initialize Graph client
+            GraphHelper.Initialize(appId, scopes, (code, cancellation) => {
+                Console.WriteLine(code.Message);
+                return Task.FromResult(0);
+            });
 
-            // Request a token to sign in the user
-            var accessToken = authProvider.GetAccessToken().Result;
+            var accessToken = GraphHelper.GetAccessTokenAsync(scopes).Result;
             // </InitializationSnippet>
 
             // <GetUserSnippet>
-            // Initialize Graph client
-            GraphHelper.Initialize(authProvider);
-
             // Get signed in user
             var user = GraphHelper.GetMeAsync().Result;
             Console.WriteLine($"Welcome {user.DisplayName}!\n");

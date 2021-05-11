@@ -4,48 +4,9 @@ In this exercise you will incorporate the Microsoft Graph into the application. 
 
 ## Get user details
 
-1. Create a new directory in the **GraphTutorial** directory named **Graph**.
-1. Create a new file in the **Graph** directory named **GraphHelper.cs** and add the following code to that file.
+1. Open **./Graph/GraphHelper.cs** and add the following function to the **GraphHelper** class.
 
-    ```csharp
-    using Microsoft.Graph;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using TimeZoneConverter;
-
-    namespace GraphTutorial
-    {
-        public class GraphHelper
-        {
-            private static GraphServiceClient graphClient;
-            public static void Initialize(IAuthenticationProvider authProvider)
-            {
-                graphClient = new GraphServiceClient(authProvider);
-            }
-
-            public static async Task<User> GetMeAsync()
-            {
-                try
-                {
-                    // GET /me
-                    return await graphClient.Me
-                        .Request()
-                        .Select(u => new{
-                            u.DisplayName,
-                            u.MailboxSettings
-                        })
-                        .GetAsync();
-                }
-                catch (ServiceException ex)
-                {
-                    Console.WriteLine($"Error getting signed-in user: {ex.Message}");
-                    return null;
-                }
-            }
-        }
-    }
-    ```
+    :::code language="csharp" source="../demo/GraphTutorial/Graph/GraphHelper.cs" id="GetMeSnippet":::
 
 1. Add the following code in `Main` in **./Program.cs** just after the `GetAccessToken` call to get the user and output the user's display name.
 

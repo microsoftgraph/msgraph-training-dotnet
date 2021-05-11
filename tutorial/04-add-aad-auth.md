@@ -23,26 +23,45 @@ In this exercise you will extend the application from the previous exercise to s
 
 ## Implement sign-in
 
-In this section you will create an authentication provider that can be used with the Graph SDK and can also be used to explicitly request an access token by using the [device code flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code).
+In this section you will use the `DeviceCodeCredential` class to request an access token by using the [device code flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code).
 
-### Create an authentication provider
+1. Create a new directory in the **GraphTutorial** directory named **Graph**.
+1. Create a new file in the **Graph** directory named **GraphHelper.cs** and add the following code to that file.
 
-1. Create a new directory in the **GraphTutorial** directory named **Authentication**.
-1. Create a new file in the **Authentication** directory named **DeviceCodeAuthProvider.cs** and add the following code to that file.
+    ```csharp
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Azure.Core;
+    using Azure.Identity;
+    using Microsoft.Graph;
+    using TimeZoneConverter;
 
-    :::code language="csharp" source="../demo/GraphTutorial/Authentication/DeviceCodeAuthProvider.cs" id="AuthProviderSnippet":::
+    namespace GraphTutorial
+    {
+        public class GraphHelper
+        {
+            private static DeviceCodeCredential tokenCredential;
+            private static GraphServiceClient graphClient;
 
-Consider what this code does.
+            public static void Initialize(string clientId,
+                                          string[] scopes,
+                                          Func<DeviceCodeInfo, CancellationToken, Task> callBack)
+            {
+                tokenCredential = new DeviceCodeCredential(callBack, clientId);
+                graphClient = new GraphServiceClient(tokenCredential, scopes);
+            }
 
-- It uses the MSAL `IPublicClientApplication` implementation to request and manage tokens.
-- The `GetAccessToken` function:
-  - Signs in the user if they are not already signed in using the device code flow.
-  - Ensures that the token returned is always fresh by using the `AcquireTokenSilent` function, which returns the cached token if it not expired, and refreshes the token if it is expired.
-- It implements the `IAuthenticationProvider` interface so that the Graph SDK can use the class to authenticate Graph calls.
-
-## Sign in and display the access token
-
-In this section you will update the application to call the `GetAccessToken` function, which will sign in the user. You will also add code to display the token.
+            public static async Task<string> GetAccessTokenAsync(string[] scopes)
+            {
+                var context = new TokenRequestContext(scopes);
+                var response = await tokenCredential.GetTokenAsync(context);
+                return response.Token;
+            }
+        }
+    }
+    ```
 
 1. Add the following function to the `Program` class.
 
