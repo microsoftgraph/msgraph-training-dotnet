@@ -29,8 +29,8 @@ Run the following commands in your CLI to install the dependencies.
 
 ```Shell
 dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 5.0.0
-dotnet add package Azure.Identity --version 1.3.0
-dotnet add package Microsoft.Graph --version 3.22.0
+dotnet add package Azure.Identity --version 1.4.0
+dotnet add package Microsoft.Graph --version 4.0.0
 dotnet add package TimeZoneConverter
 ```
 
