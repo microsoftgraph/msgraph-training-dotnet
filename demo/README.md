@@ -33,7 +33,7 @@ If you don't have a Microsoft account, you can [sign up for the Office 365 Devel
 
     ![A screenshot of the Redirect URIs page](/tutorial/images/aad-redirect-uris.png)
 
-1. Locate the **Default client type** section and change the **Treat application as a public client** toggle to **Yes**, then choose **Save**.
+1. Locate the **Advanced settings** section and change the **Allow public client flows** toggle to **Yes**, then choose **Save**.
 
     ![A screenshot of the Default client type section](/tutorial/images/aad-default-client-type.png)
 
