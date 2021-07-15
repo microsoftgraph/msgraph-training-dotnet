@@ -21,7 +21,7 @@ Begin by creating a new .NET Core console project using the [.NET Core CLI](/dot
 Before moving on, add some additional dependencies that you will use later.
 
 - [Microsoft.Extensions.Configuration.UserSecrets](https://github.com/aspnet/extensions) to read application configuration from the [.NET development secret store](https://docs.microsoft.com/aspnet/core/security/app-secrets).
-- [Microsoft Authentication Library (MSAL) for .NET](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) to authenticate the user and acquire access tokens.
+- [Azure SDK Client Library for Azure Identity](https://github.com/Azure/azure-sdk-for-net) to authenticate the user and acquire access tokens.
 - [Microsoft Graph .NET Client Library](https://github.com/microsoftgraph/msgraph-sdk-dotnet) to make calls to the Microsoft Graph.
 - [TimeZoneConverter](https://github.com/mj1856/TimeZoneConverter) for translating Windows time zone identifiers to IANA identifiers.
 
@@ -29,7 +29,7 @@ Run the following commands in your CLI to install the dependencies.
 
 ```Shell
 dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 5.0.0
-dotnet add package Microsoft.Identity.Client --version 4.25.0
+dotnet add package Azure.Identity --version 1.3.0
 dotnet add package Microsoft.Graph --version 3.22.0
 dotnet add package TimeZoneConverter
 ```
@@ -41,9 +41,10 @@ In this section you will create a simple console-based menu.
 Open **./Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace its entire contents with the following code.
 
 ```csharp
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace GraphTutorial
 {
