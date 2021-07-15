@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
@@ -40,6 +41,15 @@ namespace GraphTutorial
             // Get signed in user
             var user = GraphHelper.GetMeAsync().Result;
             Console.WriteLine($"Welcome {user.DisplayName}!\n");
+
+            // Check for timezone and date/time formats in mailbox settings
+            // Use defaults if absent
+            var userTimeZone = user.MailboxSettings?.TimeZone ??
+                TimeZoneInfo.Local.StandardName;
+            var dateFormat = user.MailboxSettings?.DateFormat ??
+                CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+            var timeFormat = user.MailboxSettings?.TimeFormat ??
+                CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
             // </GetUserSnippet>
 
             int choice = -1;
