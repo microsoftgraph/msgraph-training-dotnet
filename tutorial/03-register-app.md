@@ -20,6 +20,6 @@ In this exercise you will create a new Azure AD application using the Azure Acti
 
     ![A screenshot of the application ID of the new app registration](./images/aad-application-id.png)
 
-1. Select **Authentication** under **Manage**. Locate the **Advanced settings** section and change the **Treat application as a public client** toggle to **Yes**, then choose **Save**.
+1. Select **Authentication** under **Manage**. Locate the **Advanced settings** section and change the **Allow public client flows** toggle to **Yes**, then choose **Save**.
 
-    ![A screenshot of the Default client type section](./images/aad-default-client-type.png)
+    ![A screenshot of the Allow public client flows toggle](./images/aad-default-client-type.png)
