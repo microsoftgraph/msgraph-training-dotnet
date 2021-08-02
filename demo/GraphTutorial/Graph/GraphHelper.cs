@@ -21,7 +21,7 @@ namespace GraphTutorial
                                       string[] scopes,
                                       Func<DeviceCodeInfo, CancellationToken, Task> callBack)
         {
-            tokenCredential = new DeviceCodeCredential(callBack, clientId);
+            tokenCredential = new DeviceCodeCredential(callBack, "common", clientId);
             graphClient = new GraphServiceClient(tokenCredential, scopes);
         }
 
