@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.4.0" />
+    <PackageReference Include="Azure.Identity" Version="1.4.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Graph" Version="4.0.0-preview.7" />
+    <PackageReference Include="Microsoft.Graph" Version="4.0.0" />
     <PackageReference Include="TimeZoneConverter" Version="3.5.0" />
   </ItemGroup>
 
