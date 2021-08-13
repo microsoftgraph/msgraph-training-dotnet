@@ -44,12 +44,12 @@ namespace GraphTutorial
 
             // Check for timezone and date/time formats in mailbox settings
             // Use defaults if absent
-            var userTimeZone = user.MailboxSettings?.TimeZone ??
-                TimeZoneInfo.Local.StandardName;
-            var dateFormat = user.MailboxSettings?.DateFormat ??
-                CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
-            var timeFormat = user.MailboxSettings?.TimeFormat ??
-                CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
+            var userTimeZone = !string.IsNullOrEmpty(user.MailboxSettings?.TimeZone) ?
+                user.MailboxSettings?.TimeZone : TimeZoneInfo.Local.StandardName;
+            var userDateFormat = !string.IsNullOrEmpty(user.MailboxSettings?.DateFormat) ?
+                user.MailboxSettings?.DateFormat : CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+            var userTimeFormat = !string.IsNullOrEmpty(user.MailboxSettings?.TimeFormat) ?
+                user.MailboxSettings?.TimeFormat : CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
             // </GetUserSnippet>
 
             int choice = -1;
@@ -84,8 +84,8 @@ namespace GraphTutorial
                     case 2:
                         // List the calendar
                         ListCalendarEvents(
-                            user.MailboxSettings.TimeZone,
-                            $"{user.MailboxSettings.DateFormat} {user.MailboxSettings.TimeFormat}"
+                            userTimeZone,
+                            $"{userDateFormat} {userTimeFormat}"
                         );
                         break;
                     case 3:
