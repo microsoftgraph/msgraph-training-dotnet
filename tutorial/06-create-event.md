@@ -23,7 +23,7 @@ In this section you will add the ability to create events on the user's calendar
 1. Add the following just after the `// Create a new event` comment in the `Main` function.
 
     ```csharp
-    CreateEvent(user.MailboxSettings.TimeZone);
+    CreateEvent(userTimeZone);
     ```
 
 1. Save all of your changes and run the app. Choose the **Add an event** option. Respond to the prompts to create a new event on the user's calendar.
