@@ -90,7 +90,7 @@ namespace GraphTutorial
                         break;
                     case 3:
                         // Create a new event
-                        CreateEvent(user.MailboxSettings.TimeZone);
+                        CreateEvent(userTimeZone);
                         break;
                     default:
                         Console.WriteLine("Invalid choice! Please try again.");
