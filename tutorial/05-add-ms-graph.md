@@ -43,8 +43,8 @@ Consider what this code is doing.
 
     ```csharp
     ListCalendarEvents(
-        user.MailboxSettings.TimeZone,
-        $"{user.MailboxSettings.DateFormat} {user.MailboxSettings.TimeFormat}"
+        userTimeZone,
+        $"{userDateFormat} {userTimeFormat}"
     );
     ```
 
