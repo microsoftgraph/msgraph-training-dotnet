@@ -1,3 +1,7 @@
+---
+ms.localizationpriority: medium
+---
+
 <!-- markdownlint-disable MD002 MD041 -->
 
 In this exercise you will create a new Azure AD application using the Azure Active Directory admin center.

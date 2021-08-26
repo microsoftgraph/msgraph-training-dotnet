@@ -1,3 +1,7 @@
+---
+ms.localizationpriority: medium
+---
+
 <!-- markdownlint-disable MD002 MD041 -->
 
 Begin by creating a new .NET Core console project using the [.NET Core CLI](/dotnet/core/tools/).
