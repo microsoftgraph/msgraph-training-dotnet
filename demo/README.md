@@ -4,10 +4,10 @@
 
 To run the completed project in this folder, you need the following:
 
-- The [.NET Core SDK](https://dotnet.microsoft.com/download) installed on your development machine. (**Note:** This tutorial was written with .NET Core SDK version 3.1.402. The steps in this guide may work with other versions, but that has not been tested.)
+- The [.NET SDK](https://dotnet.microsoft.com/download) installed on your development machine. (**Note:** This tutorial was written with .NET SDK version 5.0.302. The steps in this guide may work with other versions, but that has not been tested.)
 - A Microsoft work or school account.
 
-If you don't have a Microsoft account, you can [sign up for the Office 365 Developer Program](https://developer.microsoft.com/office/dev-program) to get a free Office 365 subscription.
+If you don't have a Microsoft account, you can [sign up for the Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program) to get a free Microsoft 365 subscription.
 
 ## Register a web application with the Azure Active Directory admin center
 
@@ -15,27 +15,23 @@ If you don't have a Microsoft account, you can [sign up for the Office 365 Devel
 
 1. Select **Azure Active Directory** in the left-hand navigation, then select **App registrations** under **Manage**.
 
-    ![A screenshot of the App registrations ](/tutorial/images/aad-portal-app-registrations.png)
+    ![A screenshot of the App registrations ](../tutorial/images/aad-portal-app-registrations.png)
 
 1. Select **New registration**. On the **Register an application** page, set the values as follows.
 
     - Set **Name** to `.NET Core Graph Tutorial`.
-    - Set **Supported account types** to **Accounts in any organizational directory**.
-    - Leave **Redirect URI** empty.
+    - Set **Supported account types** to **Accounts in any organizational directory and personal Microsoft accounts**.
+    - Under **Redirect URI**, change the dropdown to **Public client (mobile & desktop)**, and set the value to `https://login.microsoftonline.com/common/oauth2/nativeclient`.
 
-    ![A screenshot of the Register an application page](/tutorial/images/aad-register-an-app.png)
+    ![A screenshot of the Register an application page](../tutorial/images/aad-register-an-app.png)
 
 1. Select **Register**. On the **.NET Core Graph Tutorial** page, copy the value of the **Application (client) ID** and save it, you will need it in the next step.
 
-    ![A screenshot of the application ID of the new app registration](/tutorial/images/aad-application-id.png)
+    ![A screenshot of the application ID of the new app registration](../tutorial/images/aad-application-id.png)
 
-1. Select the **Add a Redirect URI** link. On the **Redirect URIs** page, locate the **Suggested Redirect URIs for public clients (mobile, desktop)** section. Select the `https://login.microsoftonline.com/common/oauth2/nativeclient` URI.
+1. Select **Authentication** under **Manage**. Locate the **Advanced settings** section and change the **Allow public client flows** toggle to **Yes**, then choose **Save**.
 
-    ![A screenshot of the Redirect URIs page](/tutorial/images/aad-redirect-uris.png)
-
-1. Locate the **Advanced settings** section and change the **Allow public client flows** toggle to **Yes**, then choose **Save**.
-
-    ![A screenshot of the Default client type section](/tutorial/images/aad-default-client-type.png)
+    ![A screenshot of the Allow public client flows toggle](../tutorial/images/aad-default-client-type.png)
 
 ## Configure the sample
 
@@ -49,7 +45,7 @@ If you don't have a Microsoft account, you can [sign up for the Office 365 Devel
 
     ```Shell
     dotnet user-secrets set appId "YOUR_APP_ID_HERE"
-    dotnet user-secrets set scopes "User.Read;Calendars.Read"
+    dotnet user-secrets set scopes "User.Read;MailboxSettings.Read;Calendars.ReadWrite"
     ```
 
 ## Build and run the sample
