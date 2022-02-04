@@ -7,7 +7,7 @@ To run the completed project in this folder, you need the following:
 - The [.NET SDK](https://dotnet.microsoft.com/download) installed on your development machine. (**Note:** This tutorial was written with .NET SDK version 5.0.302. The steps in this guide may work with other versions, but that has not been tested.)
 - A Microsoft work or school account.
 
-If you don't have a Microsoft account, you can [sign up for the Office 365 Developer Program](https://developer.microsoft.com/office/dev-program) to get a free Office 365 subscription.
+If you don't have a Microsoft account, you can [sign up for the Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program) to get a free Microsoft 365 subscription.
 
 ## Register a web application with the Azure Active Directory admin center
 
