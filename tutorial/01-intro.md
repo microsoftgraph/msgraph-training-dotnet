@@ -19,7 +19,7 @@ You should also have either a personal Microsoft account with a mailbox on Outlo
 - You can [sign up for the Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program) to get a free Microsoft 365 subscription.
 
 > [!NOTE]
-> This tutorial was written with .NET Core SDK version 5.0.302. The steps in this guide may work with other versions, but that has not been tested.
+> This tutorial was written with .NET Core SDK version 6.0.102. The steps in this guide may work with other versions, but that has not been tested.
 
 ## Feedback
 
