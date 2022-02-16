@@ -8,34 +8,33 @@ Begin by creating a new .NET Core console project using the [.NET Core CLI](/dot
 
 1. Open your command-line interface (CLI) in a directory where you want to create the project. Run the following command.
 
-    ```Shell
+    ```dotnetcli
     dotnet new console -o GraphTutorial
     ```
 
 1. Once the project is created, verify that it works by changing the current directory to the **GraphTutorial** directory and running the following command in your CLI.
 
-    ```Shell
+    ```dotnetcli
     dotnet run
     ```
 
-    If it works, the app should output `Hello World!`.
+    If it works, the app should output `Hello, World!`.
 
 ## Install dependencies
 
 Before moving on, add some additional dependencies that you will use later.
 
-- [Microsoft.Extensions.Configuration.UserSecrets](https://github.com/aspnet/extensions) to read application configuration from the [.NET development secret store](https://docs.microsoft.com/aspnet/core/security/app-secrets).
+- [.NET configuration packages](https://docs.microsoft.com/dotnet/core/extensions/configuration) to read application configuration from **appsettings.json**.
 - [Azure SDK Client Library for Azure Identity](https://github.com/Azure/azure-sdk-for-net) to authenticate the user and acquire access tokens.
 - [Microsoft Graph .NET Client Library](https://github.com/microsoftgraph/msgraph-sdk-dotnet) to make calls to the Microsoft Graph.
-- [TimeZoneConverter](https://github.com/mj1856/TimeZoneConverter) for translating Windows time zone identifiers to IANA identifiers.
 
 Run the following commands in your CLI to install the dependencies.
 
 ```Shell
-dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 5.0.0
-dotnet add package Azure.Identity --version 1.4.1
-dotnet add package Microsoft.Graph --version 4.0.0
-dotnet add package TimeZoneConverter
+dotnet add package Microsoft.Extensions.Configuration.Binder --version 6.0.0
+dotnet add package Microsoft.Extensions.Configuration.Json --version 6.0.0
+dotnet add package Azure.Identity --version 1.5.0
+dotnet add package Microsoft.Graph --version 4.18.0
 ```
 
 ## Design the app
