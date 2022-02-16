@@ -21,7 +21,8 @@ param(
 $graphAppId = "00000003-0000-0000-c000-000000000000"
 
 # Requires an admin
-Connect-MgGraph -Scopes "Application.ReadWrite.All AppRoleAssignment.ReadWrite.All User.Read" -UseDeviceAuthentication -ErrorAction Stop
+Connect-MgGraph -Scopes "Application.ReadWrite.All AppRoleAssignment.ReadWrite.All User.Read" `
+ -UseDeviceAuthentication -ErrorAction Stop
 
 # Get the application and service principal
 $appRegistration = Get-MgApplication -Filter ("appId eq '" + $AppId +"'") -ErrorAction Stop
@@ -48,13 +49,16 @@ foreach($scope in $GraphScopes)
 }
 
 # Add the permissions to required resource access
-Update-MgApplication -ApplicationId $appRegistration.Id -RequiredResourceAccess @{ ResourceAppId = $graphAppId; ResourceAccess = $resourceAccess } -ErrorAction Stop
+Update-MgApplication -ApplicationId $appRegistration.Id -RequiredResourceAccess `
+ @{ ResourceAppId = $graphAppId; ResourceAccess = $resourceAccess } -ErrorAction Stop
 Write-Host -ForegroundColor Cyan "Added application permissions to app registration"
 
 # Add admin consent
 foreach ($appRole in $resourceAccess)
 {
-  New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $appServicePrincipal.Id -PrincipalId $appServicePrincipal.Id -ResourceId $graphServicePrincipal.Id -AppRoleId $appRole.Id -ErrorAction SilentlyContinue -ErrorVariable SPError | Out-Null
+  New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $appServicePrincipal.Id `
+   -PrincipalId $appServicePrincipal.Id -ResourceId $graphServicePrincipal.Id `
+   -AppRoleId $appRole.Id -ErrorAction SilentlyContinue -ErrorVariable SPError | Out-Null
   if ($SPError)
   {
     Write-Host -ForegroundColor Red "Admin consent for one of the requested scopes could not be added."
@@ -65,7 +69,8 @@ foreach ($appRole in $resourceAccess)
 Write-Host -ForegroundColor Cyan "Added admin consent"
 
 # Add a client secret
-$clientSecret = Add-MgApplicationPassword -ApplicationId $appRegistration.Id -PasswordCredential @{ DisplayName = "Added by PowerShell" } -ErrorAction Stop
+$clientSecret = Add-MgApplicationPassword -ApplicationId $appRegistration.Id -PasswordCredential `
+ @{ DisplayName = "Added by PowerShell" } -ErrorAction Stop
 
 Write-Host
 Write-Host -ForegroundColor Green "SUCCESS"
@@ -82,6 +87,7 @@ if ($StayConnected -eq $false)
 else
 {
   Write-Host
-  Write-Host -ForegroundColor Yellow "The connection to Microsoft Graph is still active. To disconnect, use Disconnect-MgGraph"
+  Write-Host -ForegroundColor Yellow `
+   "The connection to Microsoft Graph is still active. To disconnect, use Disconnect-MgGraph"
 }
 # </ScriptBody>

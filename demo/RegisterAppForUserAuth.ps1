@@ -10,7 +10,8 @@ param(
 
   [Parameter(Mandatory=$false,
   HelpMessage="The sign in audience for the app")]
-  [ValidateSet("AzureADMyOrg", "AzureADMultipleOrgs", "AzureADandPersonalMicrosoftAccount", "PersonalMicrosoftAccount")]
+  [ValidateSet("AzureADMyOrg", "AzureADMultipleOrgs", `
+  "AzureADandPersonalMicrosoftAccount", "PersonalMicrosoftAccount")]
   [String]
   $SignInAudience = "AzureADandPersonalMicrosoftAccount",
 
@@ -33,7 +34,6 @@ $authTenant = switch ($SignInAudience)
 if ($authTenant -eq "invalid")
 {
   Write-Host -ForegroundColor Red "Invalid sign in audience:" $SignInAudience
-  Write-Host -ForegroundColor Cyan "Valid choices: AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount, PersonalMicrosoftAccount"
   Exit
 }
 
@@ -56,7 +56,8 @@ Write-Host -ForegroundColor Cyan "App registration created with app ID" $appRegi
 # Create corresponding service principal
 if ($SignInAudience -ne "PersonalMicrosoftAccount")
 {
-  New-MgServicePrincipal -AppId $appRegistration.AppId -ErrorAction SilentlyContinue -ErrorVariable SPError | Out-Null
+  New-MgServicePrincipal -AppId $appRegistration.AppId -ErrorAction SilentlyContinue `
+   -ErrorVariable SPError | Out-Null
   if ($SPError)
   {
     Write-Host -ForegroundColor Red "A service principal for the app could not be created."
@@ -82,6 +83,7 @@ if ($StayConnected -eq $false)
 else
 {
   Write-Host
-  Write-Host -ForegroundColor Yellow "The connection to Microsoft Graph is still active. To disconnect, use Disconnect-MgGraph"
+  Write-Host -ForegroundColor Yellow `
+   "The connection to Microsoft Graph is still active. To disconnect, use Disconnect-MgGraph"
 }
 # </ScriptBody>
