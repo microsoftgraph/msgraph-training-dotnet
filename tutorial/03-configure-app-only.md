@@ -7,7 +7,7 @@ ms.localizationpriority: medium
 In this section you will update the app registration from the previous section to support app-only authentication. You only need to complete this section if you intend to use the app-only portions of this tutorial.
 
 > [!div class="nextstepaction"]
-> [Skip to next step](/graph/tutorials/dotnet-core?tutorial-step=3)
+> [Skip to next step](?tutorial-step=3)
 
 > [!IMPORTANT]
 > The steps in this section require a work/school account with the Global administrator role.
