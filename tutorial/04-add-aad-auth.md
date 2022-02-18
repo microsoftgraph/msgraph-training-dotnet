@@ -2,70 +2,22 @@
 ms.localizationpriority: medium
 ---
 
-<!-- markdownlint-disable MD002 MD041 -->
+<!-- markdownlint-disable MD041 -->
 
-In this exercise you will extend the application from the previous exercise to support authentication with Azure AD. This is required to obtain the necessary OAuth access token to call the Microsoft Graph. In this step you will integrate the [Microsoft Authentication Library (MSAL) for .NET](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) into the application.
+In this section you will extend the application from the previous exercise to support authentication with Azure AD. This is required to obtain the necessary OAuth access token to call the Microsoft Graph. In this step you will integrate the [Azure Identity client library for .NET](https://www.nuget.org/packages/Azure.Identity) into the application and configure authentication for the [Microsoft Graph .NET client library](https://github.com/microsoftgraph/msgraph-sdk-dotnet).
 
-1. Initialize the [.NET development secret store](/aspnet/core/security/app-secrets) by opening your CLI in the directory that contains **GraphTutorial.csproj** and running the following command.
+The Azure Identity library provides a number of `TokenCredential` classes that implement OAuth2 token flows. The Microsoft Graph client library uses those classes to authenticate calls to Microsoft Graph. In this example, we'll use the following `TokenCredential` classes.
 
-    ```Shell
-    dotnet user-secrets init
-    ```
+- `DeviceCodeCredential` implements the [device code flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code) for user authentication.
+- `ClientSecretCredential` implements the [client credentials flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) for app-only authentication.
 
-1. Add your application ID and a list of required scopes to the secret store using the following commands. Replace `YOUR_APP_ID_HERE` with the application ID you created in the Azure portal.
-
-    ```Shell
-    dotnet user-secrets set appId "YOUR_APP_ID_HERE"
-    dotnet user-secrets set scopes "User.Read;MailboxSettings.Read;Calendars.ReadWrite"
-    ```
-
-    Let's look at the permission scopes you just set.
-
-    - **User.Read** will allow the app to read the signed-in user's profile to get information such as display name and email address.
-    - **MailboxSettings.Read** will allow the app to read the user's preferred time zone, date format, and time format.
-    - **Calendars.ReadWrite** will allow the app to read the existing events on the user's calendar and add new events.
-
-## Implement sign-in
+## Configure Graph client for user authentication
 
 In this section you will use the `DeviceCodeCredential` class to request an access token by using the [device code flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code).
 
-1. Create a new directory in the **GraphTutorial** directory named **Graph**.
-1. Create a new file in the **Graph** directory named **GraphHelper.cs** and add the following code to that file.
+1. Create a new file in the **GraphTutorial** directory named **GraphHelper.cs** and add the following code to that file.
 
-    ```csharp
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Azure.Core;
-    using Azure.Identity;
-    using Microsoft.Graph;
-    using TimeZoneConverter;
-
-    namespace GraphTutorial
-    {
-        public class GraphHelper
-        {
-            private static DeviceCodeCredential tokenCredential;
-            private static GraphServiceClient graphClient;
-
-            public static void Initialize(string clientId,
-                                          string[] scopes,
-                                          Func<DeviceCodeInfo, CancellationToken, Task> callBack)
-            {
-                tokenCredential = new DeviceCodeCredential(callBack, clientId);
-                graphClient = new GraphServiceClient(tokenCredential, scopes);
-            }
-
-            public static async Task<string> GetAccessTokenAsync(string[] scopes)
-            {
-                var context = new TokenRequestContext(scopes);
-                var response = await tokenCredential.GetTokenAsync(context);
-                return response.Token;
-            }
-        }
-    }
-    ```
+    :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="GraphHelperSnippet":::
 
 1. Add the following function to the `Program` class.
 

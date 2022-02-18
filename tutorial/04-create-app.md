@@ -25,8 +25,8 @@ Begin by creating a new .NET Core console project using the [.NET Core CLI](/dot
 Before moving on, add some additional dependencies that you will use later.
 
 - [.NET configuration packages](https://docs.microsoft.com/dotnet/core/extensions/configuration) to read application configuration from **appsettings.json**.
-- [Azure SDK Client Library for Azure Identity](https://github.com/Azure/azure-sdk-for-net) to authenticate the user and acquire access tokens.
-- [Microsoft Graph .NET Client Library](https://github.com/microsoftgraph/msgraph-sdk-dotnet) to make calls to the Microsoft Graph.
+- [Azure Identity client library for .NET](https://www.nuget.org/packages/Azure.Identity)  to authenticate the user and acquire access tokens.
+- [Microsoft Graph .NET client library](https://github.com/microsoftgraph/msgraph-sdk-dotnet) to make calls to the Microsoft Graph.
 
 Run the following commands in your CLI to install the dependencies.
 
@@ -86,27 +86,27 @@ In this section you will create a simple console-based menu.
         // TODO
     }
 
-    void GreetUser()
+    async Task GreetUserAsync()
     {
         // TODO
     }
 
-    void DisplayAccessToken()
+    async Task DisplayAccessTokenAsync(string[]? userScopes)
     {
         // TODO
     }
 
-    void ListInbox()
+    async Task ListInboxAsync()
     {
         // TODO
     }
 
-    void SendMail()
+    async Task SendMailAsync()
     {
         // TODO
     }
 
-    void ListUsers()
+    async Task ListUsersAsync()
     {
         // TODO
     }

@@ -7,10 +7,10 @@ Console.WriteLine(".NET Core Graph Tutorial\n");
 var settings = Settings.LoadSettings();
 
 // Initialize Graph
-InitializeGraph();
+InitializeGraph(settings);
 
 // Greet the user by name
-GreetUser();
+await GreetUserAsync();
 
 int choice = -1;
 
@@ -21,7 +21,7 @@ while (choice != 0)
     Console.WriteLine("1. Display access token");
     Console.WriteLine("2. List my inbox");
     Console.WriteLine("3. Send mail");
-    Console.WriteLine("4. List users");
+    Console.WriteLine("4. List users (requires app-only)");
 
     try
     {
@@ -41,19 +41,19 @@ while (choice != 0)
             break;
         case 1:
             // Display access token
-            DisplayAccessToken();
+            await DisplayAccessTokenAsync(settings.GraphUserScopes);
             break;
         case 2:
             // List emails from user's inbox
-            ListInbox();
+            await ListInboxAsync();
             break;
         case 3:
             // Send an email message
-            SendMail();
+            await SendMailAsync();
             break;
         case 4:
             // List users
-            ListUsers();
+            await ListUsersAsync();
             break;
         default:
             Console.WriteLine("Invalid choice! Please try again.");
@@ -62,32 +62,57 @@ while (choice != 0)
 }
 // </ProgramSnippet>
 
-void InitializeGraph()
+void InitializeGraph(Settings settings)
+{
+    GraphHelper.InitializeGraphForUserAuth(settings,
+        (info, cancel) =>
+        {
+            // Display the device code message to
+            // the user. This tells them
+            // where to go to sign in and provides the
+            // code to use.
+            Console.WriteLine(info.Message);
+            return Task.FromResult(0);
+        });
+}
+
+async Task GreetUserAsync()
+{
+    try
+    {
+        var user = await GraphHelper.GetUserAsync();
+        Console.WriteLine($"Hello, {user?.DisplayName}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error getting user: {ex.Message}");
+    }
+}
+
+async Task DisplayAccessTokenAsync(string[]? userScopes)
+{
+    try
+    {
+        var userToken = await GraphHelper.GetUserTokenAsync(userScopes);
+        Console.WriteLine($"User token: {userToken}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error getting user access token: {ex.Message}");
+    }
+}
+
+async Task ListInboxAsync()
 {
     // TODO
 }
 
-void GreetUser()
+async Task SendMailAsync()
 {
     // TODO
 }
 
-void DisplayAccessToken()
-{
-    // TODO
-}
-
-void ListInbox()
-{
-    // TODO
-}
-
-void SendMail()
-{
-    // TODO
-}
-
-void ListUsers()
+async Task ListUsersAsync()
 {
     // TODO
 }

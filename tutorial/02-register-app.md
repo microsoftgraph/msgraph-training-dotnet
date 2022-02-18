@@ -55,10 +55,10 @@ To use PowerShell, you'll need the Microsoft Graph PowerShell SDK. If you do not
 
 1. Open PowerShell and change the current directory to the location of **RegisterAppForUserAuth.ps1**.
 
-1. Run the following command, replacing `AUDIENCE_VALUE` with the desired value (see table below).
+1. Run the following command, replacing *&lt;audience-value&gt;* with the desired value (see table below).
 
     ```powershell
-    .\RegisterAppForUserAuth.ps1 -AppName ".NET Graph Tutorial" -SignInAudience AUDIENCE_VALUE
+    .\RegisterAppForUserAuth.ps1 -AppName ".NET Graph Tutorial" -SignInAudience <audience-value>
     ```
 
     | SignInAudience value | Who can sign in? |
