@@ -19,8 +19,9 @@ while (choice != 0)
     Console.WriteLine("Please choose one of the following options:");
     Console.WriteLine("0. Exit");
     Console.WriteLine("1. Display access token");
-    Console.WriteLine("2. View this week's calendar");
-    Console.WriteLine("3. Add an event");
+    Console.WriteLine("2. List my inbox");
+    Console.WriteLine("3. Send mail");
+    Console.WriteLine("4. List users");
 
     try
     {
@@ -50,6 +51,10 @@ while (choice != 0)
             // Send an email message
             SendMail();
             break;
+        case 4:
+            // List users
+            ListUsers();
+            break;
         default:
             Console.WriteLine("Invalid choice! Please try again.");
             break;
@@ -78,6 +83,11 @@ void ListInbox()
 }
 
 void SendMail()
+{
+    // TODO
+}
+
+void ListUsers()
 {
     // TODO
 }

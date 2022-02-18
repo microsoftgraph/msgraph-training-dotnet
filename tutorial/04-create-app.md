@@ -105,6 +105,11 @@ In this section you will create a simple console-based menu.
     {
         // TODO
     }
+
+    void ListUsers()
+    {
+        // TODO
+    }
     ```
 
 This implements a basic menu and reads the user's choice from the command line.
