@@ -70,7 +70,7 @@ if ($SignInAudience -ne "PersonalMicrosoftAccount")
 
 Write-Host
 Write-Host -ForegroundColor Green "SUCCESS"
-Write-Host -ForegroundColor Cyan -NoNewline "Application ID: "
+Write-Host -ForegroundColor Cyan -NoNewline "Client ID: "
 Write-Host -ForegroundColor Yellow $appRegistration.AppId
 Write-Host -ForegroundColor Cyan -NoNewline "Auth tenant: "
 Write-Host -ForegroundColor Yellow $authTenant

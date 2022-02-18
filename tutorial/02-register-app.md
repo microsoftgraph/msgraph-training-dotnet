@@ -70,11 +70,11 @@ To use PowerShell, you'll need the Microsoft Graph PowerShell SDK. If you do not
 
 1. Follow the prompt to open `https://microsoft.com/devicelogin` in a browser, enter the provided code, and complete the authentication process.
 
-1. Copy the **Application ID** and **Auth tenant** values from the script output. You will need these values in the next step.
+1. Copy the **Client ID** and **Auth tenant** values from the script output. You will need these values in the next step.
 
     ```powershell
     SUCCESS
-    Application ID: 2fb1652f-a9a0-4db9-b220-b224b8d9d38b
+    Client ID: 2fb1652f-a9a0-4db9-b220-b224b8d9d38b
     Auth tenant: common
     ```
 

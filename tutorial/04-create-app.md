@@ -37,68 +37,74 @@ dotnet add package Azure.Identity --version 1.5.0
 dotnet add package Microsoft.Graph --version 4.18.0
 ```
 
+## Load application settings
+
+In this section you'll add the details of your app registration to the project.
+
+1. Create a file in the **GraphTutorial** directory named **appsettings.json** and add the following code.
+
+    :::code language="json" source="../demo/GraphTutorial/appsettings.json":::
+
+1. Update the values according to the following table.
+
+    | Setting | Value |
+    |---------|-------|
+    | `clientId` | The client ID of your app registration |
+    | `clientSecret' | The client secret from your app registration (only if you configured app-only authentication) |
+    | `authTenant` | If you chose the option to only allow users in your organization to sign in, change this value to your tenant ID. Otherwise leave as `common`. |
+
+    > [!TIP]
+    > Optionally, you can set these values in a separate file named **appsettings.Development.json**, or in the [.NET Secret Manager](https://docs.microsoft.com/aspnet/core/security/app-secrets).
+
+1. Update **GraphTutorial.csproj** to copy **appsettings.json** to the output directory. Add the following code between the `<Project>` and `</Project>` lines.
+
+    ```xml
+    <ItemGroup>
+      <None Include="appsettings*.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+    ```
+
+1. Create a file in the **GraphTutorial** directory named **Settings.cs** and add the following code.
+
+    :::code language="csharp" source="../demo/GraphTutorial/Settings.cs" id="SettingsSnippet":::
+
 ## Design the app
 
 In this section you will create a simple console-based menu.
 
-Open **./Program.cs** in a text editor (such as [Visual Studio Code](https://code.visualstudio.com/)) and replace its entire contents with the following code.
+1. Open **./Program.cs** and replace its entire contents with the following code.
 
-```csharp
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="ProgramSnippet":::
 
-namespace GraphTutorial
-{
-    class Program
+1. Add the following placeholder methods at the end of the file. You'll implement them in later steps.
+
+    ```csharp
+    void InitializeGraph()
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine(".NET Core Graph Tutorial\n");
-
-            int choice = -1;
-
-            while (choice != 0) {
-                Console.WriteLine("Please choose one of the following options:");
-                Console.WriteLine("0. Exit");
-                Console.WriteLine("1. Display access token");
-                Console.WriteLine("2. View this week's calendar");
-                Console.WriteLine("3. Add an event");
-
-                try
-                {
-                    choice = int.Parse(Console.ReadLine());
-                }
-                catch (System.FormatException)
-                {
-                    // Set to invalid value
-                    choice = -1;
-                }
-
-                switch(choice)
-                {
-                    case 0:
-                        // Exit the program
-                        Console.WriteLine("Goodbye...");
-                        break;
-                    case 1:
-                        // Display access token
-                        break;
-                    case 2:
-                        // List the calendar
-                        break;
-                    case 3:
-                        // Create a new event
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice! Please try again.");
-                        break;
-                }
-            }
-        }
+        // TODO
     }
-}
-```
+
+    void GreetUser()
+    {
+        // TODO
+    }
+
+    void DisplayAccessToken()
+    {
+        // TODO
+    }
+
+    void ListInbox()
+    {
+        // TODO
+    }
+
+    void SendMail()
+    {
+        // TODO
+    }
+    ```
 
 This implements a basic menu and reads the user's choice from the command line.
