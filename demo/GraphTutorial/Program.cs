@@ -111,10 +111,36 @@ async Task DisplayAccessTokenAsync(string[]? userScopes)
 }
 // </DisplayAccessTokenSnippet>
 
+// <ListInboxSnippet>
 async Task ListInboxAsync()
 {
-    // TODO
+    try
+    {
+        var messagePage = await GraphHelper.GetInboxAsync();
+
+        // Output each message's details
+        foreach (var message in messagePage.CurrentPage)
+        {
+            Console.WriteLine($"Message: {message.Subject ?? "NO SUBJECT"}");
+            Console.WriteLine($"  From: {message.From?.EmailAddress?.Name}");
+            Console.WriteLine($"  Status: {(message.IsRead!.Value ? "Read" : "Unread")}");
+            Console.WriteLine($"  Received: {message.ReceivedDateTime?.ToLocalTime().ToString()}");
+        }
+
+        // If NextPageRequest is not null, there are more messages
+        // available on the server
+        // Access the next page like:
+        // messagePage.NextPageRequest.GetAsync();
+        var moreAvailable = messagePage.NextPageRequest != null;
+
+        Console.WriteLine($"\nMore messages available? {moreAvailable}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error getting user's inbox: {ex.Message}");
+    }
 }
+// </ListInboxSnippet>
 
 async Task SendMailAsync()
 {

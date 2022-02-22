@@ -59,7 +59,32 @@ class GraphHelper
             })
             .GetAsync();
     }
-    // <GetUserSnippet>
+    // </GetUserSnippet>
+
+    // <GetInboxSnippet>
+    public static Task<IMailFolderMessagesCollectionPage> GetInboxAsync()
+    {
+        // Ensure client isn't null
+        _ = _userClient ??
+            throw new System.NullReferenceException("Graph has not been initialized for user auth");
+
+        return _userClient.Me
+            .MailFolders["Inbox"]
+            .Messages
+            .Request()
+            .Select(m => new
+            {
+                m.From,
+                m.IsRead,
+                m.ReceivedDateTime,
+                m.Subject
+            })
+            .Top(25)
+            .OrderBy("ReceivedDateTime DESC")
+            .GetAsync();
+    }
+    // </GetInboxSnippet>
+
     #endregion
 
     #region App-only
