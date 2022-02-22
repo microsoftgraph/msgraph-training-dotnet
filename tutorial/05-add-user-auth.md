@@ -31,7 +31,7 @@ In this section you will use the `DeviceCodeCredential` class to request an acce
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="UserAuthConfigSnippet":::
 
-1. Add the following function in **Program.cs**.
+1. Replace the empty `InitializeGraph` function in **Program.cs** with the following.
 
     :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="InitializeGraphSnippet":::
 
@@ -45,7 +45,7 @@ Next, add code to get an access token from the `DeviceCodeCredential`.
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="GetUserTokenSnippet":::
 
-1. Add the following function in **Program.cs**.
+1. Replace the empty `DisplayAccessTokenAsync` function in **Program.cs** with the following.
 
     :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="DisplayAccessTokenSnippet":::
 

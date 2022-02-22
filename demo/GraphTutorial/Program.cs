@@ -78,18 +78,23 @@ void InitializeGraph(Settings settings)
 }
 // </InitializeGraphSnippet>
 
+// <GreetUserSnippet>
 async Task GreetUserAsync()
 {
     try
     {
-        //var user = await GraphHelper.GetUserAsync();
-        //Console.WriteLine($"Hello, {user?.DisplayName}");
+        var user = await GraphHelper.GetUserAsync();
+        Console.WriteLine($"Hello, {user?.DisplayName}!");
+        // For Work/school accounts, email is in Mail property
+        // Personal accounts, email is in UserPrincipalName
+        Console.WriteLine($"Email: {user?.Mail ?? user?.UserPrincipalName ?? ""}");
     }
     catch (Exception ex)
     {
         Console.WriteLine($"Error getting user: {ex.Message}");
     }
 }
+// </GreetUserSnippet>
 
 // <DisplayAccessTokenSnippet>
 async Task DisplayAccessTokenAsync(string[]? userScopes)

@@ -41,6 +41,7 @@ class GraphHelper
     }
     // </GetUserTokenSnippet>
 
+    // <GetUserSnippet>
     public static Task<User> GetUserAsync()
     {
         // Ensure client isn't null
@@ -51,11 +52,14 @@ class GraphHelper
             .Request()
             .Select(u => new
             {
-                // Only request the user's display name
-                u.DisplayName
+                // Only request specific properties
+                u.DisplayName,
+                u.Mail,
+                u.UserPrincipalName
             })
             .GetAsync();
     }
+    // <GetUserSnippet>
     #endregion
 
     #region App-only
