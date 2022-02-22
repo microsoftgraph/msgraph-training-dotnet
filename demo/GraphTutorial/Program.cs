@@ -62,6 +62,7 @@ while (choice != 0)
 }
 // </ProgramSnippet>
 
+// <InitializeGraphSnippet>
 void InitializeGraph(Settings settings)
 {
     GraphHelper.InitializeGraphForUserAuth(settings,
@@ -75,13 +76,14 @@ void InitializeGraph(Settings settings)
             return Task.FromResult(0);
         });
 }
+// </InitializeGraphSnippet>
 
 async Task GreetUserAsync()
 {
     try
     {
-        var user = await GraphHelper.GetUserAsync();
-        Console.WriteLine($"Hello, {user?.DisplayName}");
+        //var user = await GraphHelper.GetUserAsync();
+        //Console.WriteLine($"Hello, {user?.DisplayName}");
     }
     catch (Exception ex)
     {
@@ -89,6 +91,7 @@ async Task GreetUserAsync()
     }
 }
 
+// <DisplayAccessTokenSnippet>
 async Task DisplayAccessTokenAsync(string[]? userScopes)
 {
     try
@@ -101,6 +104,7 @@ async Task DisplayAccessTokenAsync(string[]? userScopes)
         Console.WriteLine($"Error getting user access token: {ex.Message}");
     }
 }
+// </DisplayAccessTokenSnippet>
 
 async Task ListInboxAsync()
 {

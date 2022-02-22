@@ -17,32 +17,54 @@ In this section you will use the `DeviceCodeCredential` class to request an acce
 
 1. Create a new file in the **GraphTutorial** directory named **GraphHelper.cs** and add the following code to that file.
 
-    :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="GraphHelperSnippet":::
-
-1. Add the following function to the `Program` class.
-
-    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="LoadAppSettingsSnippet":::
-
-1. Add the following code to the `Main` function immediately after the `Console.WriteLine(".NET Core Graph Tutorial\n");` line.
-
-    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="InitializationSnippet":::
-
-1. Add the following code to the `Main` function immediately after the `// Display access token` line.
-
     ```csharp
-    Console.WriteLine($"Access token: {accessToken}\n");
+    using Azure.Core;
+    using Azure.Identity;
+    using Microsoft.Graph;
+
+    class GraphHelper
+    {
+    }
     ```
 
-1. Build and run the app. The application displays a URL and device code.
+1. Add the following code to the `GraphHelper` class.
+
+    :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="UserAuthConfigSnippet":::
+
+1. Add the following function in **Program.cs**.
+
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="InitializeGraphSnippet":::
+
+This code declares two private properties, a `DeviceCodeCredential` object and a `DeviceCodeCredential` object. The `InitializeGraphForUserAuth` function creates a new instance of `DeviceCodeCredential`, then uses that instance to create a new instance of `DeviceCodeCredential`. Every time an API call is made to Microsoft Graph through the `_userClient`, it will use the provided credential to get an access token.
+
+## Test the DeviceCodeCredential
+
+Next, add code to get an access token from the `DeviceCodeCredential`.
+
+1. Add the following function to the `GraphHelper` class.
+
+    :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="GetUserTokenSnippet":::
+
+1. Add the following function in **Program.cs**.
+
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="DisplayAccessTokenSnippet":::
+
+1. Build and run the app. Enter `1` when prompted for an option. The application displays a URL and device code.
 
     ```Shell
-    PS C:\Source\GraphTutorial> dotnet run
     .NET Core Graph Tutorial
 
-    To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code F7CG945YZ to authenticate.
+    Please choose one of the following options:
+    0. Exit
+    1. Display access token
+    2. List my inbox
+    3. Send mail
+    4. List users (requires app-only)
+    1
+    To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code RB2RUD56D to authenticate.
     ```
 
-    > [!TIP]
-    > If you encounter errors, compare your **Program.cs** with the [example on GitHub](https://github.com/microsoftgraph/msgraph-training-dotnet-core/blob/master/demo/GraphTutorial/Program.cs).
+1. Open a browser and browse to the URL displayed. Enter the provided code and sign in. Once completed, return to the application to see the access token.
 
-1. Open a browser and browse to the URL displayed. Enter the provided code and sign in. Once completed, return to the application and choose the **1. Display access token** option to display the access token.
+> [!TIP]
+> For validation and debugging purposes *only*, you can decode user access tokens (for work or school accounts only) using Microsoft's online token parser at [https://jwt.ms](https://jwt.ms). This can be useful if you encounter token errors when calling Microsoft Graph. For example, verifying that the `scp` claim in the token contains the expected Microsoft Graph permission scopes.
