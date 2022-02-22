@@ -25,6 +25,7 @@ Please choose one of the following options:
 2. List my inbox
 3. Send mail
 4. List users (requires app-only)
+5. Make a Graph call
 3
 Mail sent.
 ```

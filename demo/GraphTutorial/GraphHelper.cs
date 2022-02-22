@@ -9,6 +9,8 @@ class GraphHelper
 {
     #region User-auth
     // <UserAuthConfigSnippet>
+    // Settings object
+    private static Settings? _settings;
     // User auth token credential
     private static DeviceCodeCredential? _deviceCodeCredential;
     // Client configured with user authentication
@@ -17,6 +19,8 @@ class GraphHelper
     public static void InitializeGraphForUserAuth(Settings settings,
         Func<DeviceCodeInfo, CancellationToken, Task> deviceCodePrompt)
     {
+        _settings = settings;
+
         _deviceCodeCredential = new DeviceCodeCredential(deviceCodePrompt,
             settings.AuthTenant, settings.ClientId);
 
@@ -25,17 +29,17 @@ class GraphHelper
     // </UserAuthConfigSnippet>
 
     // <GetUserTokenSnippet>
-    public static async Task<string> GetUserTokenAsync(string[]? scopes)
+    public static async Task<string> GetUserTokenAsync()
     {
         // Ensure credential isn't null
         _ = _deviceCodeCredential ??
             throw new System.NullReferenceException("Graph has not been initialized for user auth");
 
         // Ensure scopes isn't null
-        _ = scopes ?? throw new System.ArgumentNullException("Argument 'scopes' cannot be null");
+        _ = _settings?.GraphUserScopes ?? throw new System.ArgumentNullException("Argument 'scopes' cannot be null");
 
         // Request token with given scopes
-        var context = new TokenRequestContext(scopes);
+        var context = new TokenRequestContext(_settings.GraphUserScopes);
         var response = await _deviceCodeCredential.GetTokenAsync(context);
         return response.Token;
     }
@@ -133,21 +137,32 @@ class GraphHelper
     // Client configured with app-only authentication
     private static GraphServiceClient? _appClient;
 
-    public static void InitializeGraphForAppOnlyAuth(Settings settings)
+    private static void EnsureGraphForAppOnlyAuth()
     {
-        _clientSecretCredential = new ClientSecretCredential(
-            settings.TenantId, settings.ClientId, settings.ClientSecret);
+        // Ensure settings isn't null
+        _ = _settings ??
+            throw new System.NullReferenceException("Settings cannot be null");
 
-        _appClient = new GraphServiceClient(_clientSecretCredential,
-            // Use the default scope, which will request the scopes
-            // configured on the app registration
-            new[] {"https://graph.microsoft.com/.default"});
+        if (_clientSecretCredential == null)
+        {
+            _clientSecretCredential = new ClientSecretCredential(
+                _settings.TenantId, _settings.ClientId, _settings.ClientSecret);
+        }
+
+        if (_appClient == null)
+        {
+            _appClient = new GraphServiceClient(_clientSecretCredential,
+                // Use the default scope, which will request the scopes
+                // configured on the app registration
+                new[] {"https://graph.microsoft.com/.default"});
+        }
     }
     // </AppOnyAuthConfigSnippet>
 
     // <GetUsersSnippet>
     public static Task<IGraphServiceUsersCollectionPage> GetUsersAsync()
     {
+        EnsureGraphForAppOnlyAuth();
         // Ensure client isn't null
         _ = _appClient ??
             throw new System.NullReferenceException("Graph has not been initialized for app-only auth");
@@ -169,4 +184,16 @@ class GraphHelper
     }
     // </GetUsersSnippet>
     #endregion
+
+    // <MakeGraphCallSnippet>
+    // This function serves as a playground for testing Graph snippets
+    // or other code
+    public async static Task MakeGraphCallAsync()
+    {
+        // INSERT YOUR CODE HERE
+        // Note: if using _appClient, be sure to call EnsureGraphForAppOnlyAuth
+        // before using it.
+        // EnsureGraphForAppOnlyAuth();
+    }
+    // </MakeGraphCallSnippet>
 }

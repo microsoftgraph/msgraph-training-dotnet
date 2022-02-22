@@ -22,6 +22,7 @@ while (choice != 0)
     Console.WriteLine("2. List my inbox");
     Console.WriteLine("3. Send mail");
     Console.WriteLine("4. List users (requires app-only)");
+    Console.WriteLine("5. Make a Graph call");
 
     try
     {
@@ -41,7 +42,7 @@ while (choice != 0)
             break;
         case 1:
             // Display access token
-            await DisplayAccessTokenAsync(settings.GraphUserScopes);
+            await DisplayAccessTokenAsync();
             break;
         case 2:
             // List emails from user's inbox
@@ -53,7 +54,11 @@ while (choice != 0)
             break;
         case 4:
             // List users
-            await ListUsersAsync(settings);
+            await ListUsersAsync();
+            break;
+        case 5:
+            // Run any Graph code
+            await MakeGraphCallAsync();
             break;
         default:
             Console.WriteLine("Invalid choice! Please try again.");
@@ -97,11 +102,11 @@ async Task GreetUserAsync()
 // </GreetUserSnippet>
 
 // <DisplayAccessTokenSnippet>
-async Task DisplayAccessTokenAsync(string[]? userScopes)
+async Task DisplayAccessTokenAsync()
 {
     try
     {
-        var userToken = await GraphHelper.GetUserTokenAsync(userScopes);
+        var userToken = await GraphHelper.GetUserTokenAsync();
         Console.WriteLine($"User token: {userToken}");
     }
     catch (Exception ex)
@@ -172,9 +177,8 @@ async Task SendMailAsync()
 // </SendMailSnippet>
 
 // <ListUsersSnippet>
-async Task ListUsersAsync(Settings settings)
+async Task ListUsersAsync()
 {
-    GraphHelper.InitializeGraphForAppOnlyAuth(settings);
     try
     {
         var userPage = await GraphHelper.GetUsersAsync();
@@ -201,3 +205,10 @@ async Task ListUsersAsync(Settings settings)
     }
 }
 // </ListUsersSnippet>
+
+// <MakeGraphCallSnippet>
+async Task MakeGraphCallAsync()
+{
+    await GraphHelper.MakeGraphCallAsync();
+}
+// </MakeGraphCallSnippet>

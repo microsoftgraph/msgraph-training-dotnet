@@ -92,7 +92,7 @@ In this section you will create a simple console-based menu.
         // TODO
     }
 
-    async Task DisplayAccessTokenAsync(string[]? userScopes)
+    async Task DisplayAccessTokenAsync()
     {
         // TODO
     }
@@ -107,7 +107,12 @@ In this section you will create a simple console-based menu.
         // TODO
     }
 
-    async Task ListUsersAsync(Settings settings)
+    async Task ListUsersAsync()
+    {
+        // TODO
+    }
+
+    async Task MakeGraphCall()
     {
         // TODO
     }

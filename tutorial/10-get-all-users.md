@@ -28,6 +28,7 @@ Please choose one of the following options:
 2. List my inbox
 3. Send mail
 4. List users (requires app-only)
+5. Make a Graph call
 4
 User: Adele Vance
   ID: 05fb57bf-2653-4396-846d-2f210a91d9cf
