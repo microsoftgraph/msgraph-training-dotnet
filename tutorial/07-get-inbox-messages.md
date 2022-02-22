@@ -10,7 +10,7 @@ In this section you will add the ability to list messages in the user's email in
 
 1. Open **./Graph/GraphHelper.cs** and add the following function to the **GraphHelper** class.
 
-    :::code language="csharp" source="../demo/GraphTutorial/Graph/GraphHelper.cs" id="GetInboxSnippet":::
+    :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="GetInboxSnippet":::
 
 1. Replace the empty `ListInboxAsync` function in **Program.cs** with the following.
 

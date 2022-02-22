@@ -10,7 +10,7 @@ In this section you will incorporate the Microsoft Graph into the application. F
 
 1. Open **./Graph/GraphHelper.cs** and add the following function to the **GraphHelper** class.
 
-    :::code language="csharp" source="../demo/GraphTutorial/Graph/GraphHelper.cs" id="GetUserSnippet":::
+    :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="GetUserSnippet":::
 
 1. Replace the empty `DisplayAccessTokenAsync` function in **Program.cs** with the following.
 
