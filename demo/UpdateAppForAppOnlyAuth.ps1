@@ -24,6 +24,9 @@ $graphAppId = "00000003-0000-0000-c000-000000000000"
 Connect-MgGraph -Scopes "Application.ReadWrite.All AppRoleAssignment.ReadWrite.All User.Read" `
  -UseDeviceAuthentication -ErrorAction Stop
 
+# Get context for access to tenant ID
+$context = Get-MgContext -ErrorAction Stop
+
 # Get the application and service principal
 $appRegistration = Get-MgApplication -Filter ("appId eq '" + $AppId +"'") -ErrorAction Stop
 $appServicePrincipal = Get-MgServicePrincipal -Filter ("appId eq '" + $AppId + "'") -ErrorAction Stop
@@ -74,6 +77,8 @@ $clientSecret = Add-MgApplicationPassword -ApplicationId $appRegistration.Id -Pa
 
 Write-Host
 Write-Host -ForegroundColor Green "SUCCESS"
+Write-Host -ForegroundColor Cyan -NoNewline "Tenant ID: "
+Write-Host -ForegroundColor Yellow $context.TenantId
 Write-Host -ForegroundColor Cyan -NoNewline "Client secret: "
 Write-Host -ForegroundColor Yellow $clientSecret.SecretText
 Write-Host -ForegroundColor Cyan -NoNewline "Secret expires: "

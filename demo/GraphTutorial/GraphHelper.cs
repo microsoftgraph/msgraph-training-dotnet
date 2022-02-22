@@ -124,13 +124,25 @@ class GraphHelper
             .PostAsync();
     }
     // </SendMailSnippet>
-
     #endregion
 
     #region App-only
+    // <AppOnyAuthConfigSnippet>
     // App-ony auth token credential
     private static ClientSecretCredential? _clientSecretCredential;
     // Client configured with app-only authentication
     private static GraphServiceClient? _appClient;
+
+    public static void InitializeGraphForAppOnlyAuth(Settings settings)
+    {
+        _clientSecretCredential = new ClientSecretCredential(
+            settings.TenantId, settings.ClientId, settings.ClientSecret);
+
+        _appClient = new GraphServiceClient(_clientSecretCredential,
+            // Use the default scope, which will request the scopes
+            // configured on the app registration
+            new[] {"https://graph.microsoft.com/.default"});
+    }
+    // </AppOnyAuthConfigSnippet>
     #endregion
 }

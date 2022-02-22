@@ -51,6 +51,7 @@ In this section you'll add the details of your app registration to the project.
     |---------|-------|
     | `clientId` | The client ID of your app registration |
     | `clientSecret` | The client secret from your app registration (only if you configured app-only authentication) |
+    | `tenantId` | The tenant ID from your app registration (only if you configured app-only authentication) |
     | `authTenant` | If you chose the option to only allow users in your organization to sign in, change this value to your tenant ID. Otherwise leave as `common`. |
 
     > [!TIP]

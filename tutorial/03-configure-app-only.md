@@ -61,6 +61,7 @@ In this section you will update the app registration from the previous section t
 
     ```powershell
     SUCCESS
+    Tenant ID: a795ad0f-7d82-4a3b-a2c0-0713ec72ade7
     Client secret: 2jv7Q~8eiOd_QafJ.....
     Secret expires: 2/16/2024 9:32:09 PM
     ```
