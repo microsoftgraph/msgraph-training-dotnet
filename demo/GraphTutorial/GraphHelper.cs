@@ -69,21 +69,62 @@ class GraphHelper
             throw new System.NullReferenceException("Graph has not been initialized for user auth");
 
         return _userClient.Me
+            // Only messages from Inbox folder
             .MailFolders["Inbox"]
             .Messages
             .Request()
             .Select(m => new
             {
+                // Only request specific properties
                 m.From,
                 m.IsRead,
                 m.ReceivedDateTime,
                 m.Subject
             })
+            // Get at most 25 results
             .Top(25)
+            // Sort by received time, newest first
             .OrderBy("ReceivedDateTime DESC")
             .GetAsync();
     }
     // </GetInboxSnippet>
+
+    // <SendMailSnippet>
+    public static async Task SendMailAsync(string subject, string body, string recipient)
+    {
+        // Ensure client isn't null
+        _ = _userClient ??
+            throw new System.NullReferenceException("Graph has not been initialized for user auth");
+
+        // Create a new message
+        var message = new Message
+        {
+            Subject = subject,
+            Body = new ItemBody
+            {
+                Content = body,
+                ContentType = BodyType.Text
+            },
+            ToRecipients = new Recipient[]
+            {
+                new Recipient
+                {
+                    EmailAddress = new EmailAddress
+                    {
+                        Address = recipient
+                    }
+                }
+            }
+        };
+
+        // Send the message
+        var saveToSentItems = true;
+        await _userClient.Me
+            .SendMail(message, saveToSentItems)
+            .Request()
+            .PostAsync();
+    }
+    // </SendMailSnippet>
 
     #endregion
 
