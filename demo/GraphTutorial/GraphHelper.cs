@@ -144,5 +144,29 @@ class GraphHelper
             new[] {"https://graph.microsoft.com/.default"});
     }
     // </AppOnyAuthConfigSnippet>
+
+    // <GetUsersSnippet>
+    public static Task<IGraphServiceUsersCollectionPage> GetUsersAsync()
+    {
+        // Ensure client isn't null
+        _ = _appClient ??
+            throw new System.NullReferenceException("Graph has not been initialized for app-only auth");
+
+        return _appClient.Users
+            .Request()
+            .Select(u => new
+            {
+                // Only request specific properties
+                u.DisplayName,
+                u.Id,
+                u.Mail
+            })
+            // Get at most 25 results
+            .Top(25)
+            // Sort by display name
+            .OrderBy("DisplayName")
+            .GetAsync();
+    }
+    // </GetUsersSnippet>
     #endregion
 }
