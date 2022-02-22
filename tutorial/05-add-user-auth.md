@@ -61,7 +61,8 @@ Next, add code to get an access token from the `DeviceCodeCredential`.
     3. Send mail
     4. List users (requires app-only)
     1
-    To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code RB2RUD56D to authenticate.
+    To sign in, use a web browser to open the page https://microsoft.com/devicelogin and
+    enter the code RB2RUD56D to authenticate.
     ```
 
 1. Open a browser and browse to the URL displayed. Enter the provided code and sign in. Once completed, return to the application to see the access token.
