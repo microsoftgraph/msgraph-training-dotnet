@@ -118,9 +118,8 @@ class GraphHelper
         };
 
         // Send the message
-        var saveToSentItems = true;
         await _userClient.Me
-            .SendMail(message, saveToSentItems)
+            .SendMail(message)
             .Request()
             .PostAsync();
     }
