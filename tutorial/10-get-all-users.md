@@ -11,7 +11,7 @@ In this section you will add the ability to list all users in your Azure Active 
 
 ## Get user details
 
-1. Open **./Graph/GraphHelper.cs** and add the following function to the **GraphHelper** class.
+1. Open **./GraphHelper.cs** and add the following function to the **GraphHelper** class.
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="GetUsersSnippet":::
 

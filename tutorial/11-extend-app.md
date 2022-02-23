@@ -8,7 +8,7 @@ In this section you will add your own Microsoft Graph capabilities to the applic
 
 ## Update the app
 
-1. Open **./Graph/GraphHelper.cs** and add the following function to the **GraphHelper** class.
+1. Open **./GraphHelper.cs** and add the following function to the **GraphHelper** class.
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="MakeGraphCallSnippet":::
 

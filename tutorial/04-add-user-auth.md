@@ -9,7 +9,7 @@ In this section you will extend the application from the previous exercise to su
 The Azure Identity library provides a number of `TokenCredential` classes that implement OAuth2 token flows. The Microsoft Graph client library uses those classes to authenticate calls to Microsoft Graph. In this example, we'll use the following `TokenCredential` classes.
 
 - `DeviceCodeCredential` implements the [device code flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code) for user authentication.
-- `ClientSecretCredential` implements the [client credentials flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) for app-only authentication.
+- `ClientSecretCredential` implements the [client credentials flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) for app-only authentication. You will use this class in the optional app-only sections.
 
 ## Configure Graph client for user authentication
 

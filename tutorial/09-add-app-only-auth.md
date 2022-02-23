@@ -25,6 +25,6 @@ In this section you will use the `ClientSecretCredential` class to request an ac
     > [!NOTE]
     > The .NET Secret Manager is only available during development. Production apps should store client secrets in a secure store, such as [Azure Key Vault](https://docs.microsoft.com/azure/key-vault/general/overview).
 
-1. Open **./Graph/GraphHelper.cs** and add the following code to the **GraphHelper** class.
+1. Open **./GraphHelper.cs** and add the following code to the **GraphHelper** class.
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="AppOnyAuthConfigSnippet":::

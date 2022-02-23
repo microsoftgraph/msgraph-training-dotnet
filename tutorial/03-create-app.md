@@ -4,7 +4,7 @@ ms.localizationpriority: medium
 
 <!-- markdownlint-disable MD002 MD041 -->
 
-Begin by creating a new .NET Core console project using the [.NET Core CLI](/dotnet/core/tools/).
+Begin by creating a new .NET Core console project using the [.NET CLI](/dotnet/core/tools/).
 
 1. Open your command-line interface (CLI) in a directory where you want to create the project. Run the following command.
 
@@ -31,10 +31,10 @@ Before moving on, add some additional dependencies that you will use later.
 Run the following commands in your CLI to install the dependencies.
 
 ```Shell
-dotnet add package Microsoft.Extensions.Configuration.Binder --version 6.0.0
-dotnet add package Microsoft.Extensions.Configuration.Json --version 6.0.0
-dotnet add package Azure.Identity --version 1.5.0
-dotnet add package Microsoft.Graph --version 4.18.0
+dotnet add package Microsoft.Extensions.Configuration.Binder
+dotnet add package Microsoft.Extensions.Configuration.Json
+dotnet add package Azure.Identity
+dotnet add package Microsoft.Graph
 ```
 
 ## Load application settings

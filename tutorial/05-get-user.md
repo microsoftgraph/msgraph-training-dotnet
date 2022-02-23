@@ -8,7 +8,7 @@ In this section you will incorporate the Microsoft Graph into the application. F
 
 ## Get user details
 
-1. Open **./Graph/GraphHelper.cs** and add the following function to the **GraphHelper** class.
+1. Open **./GraphHelper.cs** and add the following function to the **GraphHelper** class.
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="GetUserSnippet":::
 
