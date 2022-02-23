@@ -13,6 +13,18 @@ In this section you will add app-only authentication to the application. This se
 
 In this section you will use the `ClientSecretCredential` class to request an access token by using the [client credentials flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow).
 
-Open **./Graph/GraphHelper.cs** and add the following code to the **GraphHelper** class.
+1. Update the value of `tenantId` in **appsettings.json** (or **appsettings.Development.json**) with your organization's tenant ID.
 
-:::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="AppOnyAuthConfigSnippet":::
+1. Add your client secret to the [.NET Secret Manager](https://docs.microsoft.com/aspnet/core/security/app-secrets). In your command-line interface, change the directory to the location of **GraphTutorial.csproj** and run the following commands, replacing *&lt;client-secret&gt;* with your client secret.
+
+    ```dotnetcli
+    dotnet user-secrets init
+    dotnet user-secrets set settings:clientSecret <client-secret>
+    ```
+
+    > [!NOTE]
+    > The .NET Secret Manager is only available during development. Production apps should store client secrets in a secure store, such as [Azure Key Vault](https://docs.microsoft.com/azure/key-vault/general/overview).
+
+1. Open **./Graph/GraphHelper.cs** and add the following code to the **GraphHelper** class.
+
+    :::code language="csharp" source="../demo/GraphTutorial/GraphHelper.cs" id="AppOnyAuthConfigSnippet":::

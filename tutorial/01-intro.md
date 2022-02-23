@@ -4,14 +4,14 @@ ms.localizationpriority: medium
 
 <!-- markdownlint-disable MD002 MD041 -->
 
-This tutorial teaches you how to build a .NET Core console app that uses the Microsoft Graph API to retrieve calendar information for a user.
+This tutorial teaches you how to build a .NET Core console app that uses the Microsoft Graph API.
 
 > [!TIP]
 > If you prefer to just download the completed tutorial, you can download or clone the [GitHub repository](https://github.com/microsoftgraph/msgraph-training-dotnet-core).
 
 ## Prerequisites
 
-Before you start this tutorial, you should have the [.NET Core SDK](https://dotnet.microsoft.com/download) installed on your development machine. If you do not have the SDK or Maven, visit the previous link for download options.
+Before you start this tutorial, you should have the [.NET SDK](https://dotnet.microsoft.com/download) installed on your development machine. If you do not have the SDK or Maven, visit the previous link for download options.
 
 You should also have either a personal Microsoft account with a mailbox on Outlook.com, or a Microsoft work or school account. If you don't have a Microsoft account, there are a couple of options to get a free account:
 
@@ -19,7 +19,7 @@ You should also have either a personal Microsoft account with a mailbox on Outlo
 - You can [sign up for the Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program) to get a free Microsoft 365 subscription.
 
 > [!NOTE]
-> This tutorial was written with .NET Core SDK version 6.0.102. The steps in this guide may work with other versions, but that has not been tested.
+> This tutorial was written with .NET SDK version 6.0.102. The steps in this guide may work with other versions, but that has not been tested.
 
 ## Feedback
 

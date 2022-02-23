@@ -7,7 +7,7 @@ ms.localizationpriority: medium
 In this section you will update the app registration from the previous section to support app-only authentication. You only need to complete this section if you intend to use the app-only portions of this tutorial. If not, you can safely skip to the next step.
 
 > [!div class="nextstepaction"]
-> [I don't need app-only, skip to the next step](?tutorial-step=3)
+> [I don't need app-only, skip to the end](?tutorial-step=10)
 
 > [!IMPORTANT]
 > The steps in this section require a work/school account with the Global administrator role.
