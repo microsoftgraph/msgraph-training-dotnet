@@ -185,6 +185,7 @@ class GraphHelper
     // </GetUsersSnippet>
     #endregion
 
+    #pragma warning disable CS1998
     // <MakeGraphCallSnippet>
     // This function serves as a playground for testing Graph snippets
     // or other code
