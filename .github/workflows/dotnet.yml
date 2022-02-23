@@ -1,4 +1,4 @@
-name: .NET
+name: Run dotnet build
 
 on:
   push:
