@@ -35,7 +35,7 @@ In this section you will use the `DeviceCodeCredential` class to request an acce
 
     :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="InitializeGraphSnippet":::
 
-This code declares two private properties, a `DeviceCodeCredential` object and a `DeviceCodeCredential` object. The `InitializeGraphForUserAuth` function creates a new instance of `DeviceCodeCredential`, then uses that instance to create a new instance of `DeviceCodeCredential`. Every time an API call is made to Microsoft Graph through the `_userClient`, it will use the provided credential to get an access token.
+This code declares two private properties, a `DeviceCodeCredential` object and a `GraphServiceClient` object. The `InitializeGraphForUserAuth` function creates a new instance of `DeviceCodeCredential`, then uses that instance to create a new instance of `GraphServiceClient`. Every time an API call is made to Microsoft Graph through the `_userClient`, it will use the provided credential to get an access token.
 
 ## Test the DeviceCodeCredential
 
@@ -65,7 +65,10 @@ Next, add code to get an access token from the `DeviceCodeCredential`.
     enter the code RB2RUD56D to authenticate.
     ```
 
-1. Open a browser and browse to the URL displayed. Enter the provided code and sign in. Once completed, return to the application to see the access token.
+1. Open a browser and browse to the URL displayed. Enter the provided code and sign in.
 
-> [!TIP]
-> For validation and debugging purposes *only*, you can decode user access tokens (for work or school accounts only) using Microsoft's online token parser at [https://jwt.ms](https://jwt.ms). This can be useful if you encounter token errors when calling Microsoft Graph. For example, verifying that the `scp` claim in the token contains the expected Microsoft Graph permission scopes.
+    [!INCLUDE [browser-auth-note](./includes/browser-auth-note.md)]
+
+1. Once completed, return to the application to see the access token.
+
+    [!INCLUDE [token-debug-tip](./includes/token-debug-tip.md)]

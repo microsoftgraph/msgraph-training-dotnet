@@ -18,17 +18,19 @@ In this section you will add the ability to send an email message as the authent
 
 1. Run the app, sign in, and choose option 3 to send an email to yourself.
 
-```Shell
-Please choose one of the following options:
-0. Exit
-1. Display access token
-2. List my inbox
-3. Send mail
-4. List users (requires app-only)
-5. Make a Graph call
-3
-Mail sent.
-```
+    ```Shell
+    Please choose one of the following options:
+    0. Exit
+    1. Display access token
+    2. List my inbox
+    3. Send mail
+    4. List users (requires app-only)
+    5. Make a Graph call
+    3
+    Mail sent.
+    ```
+
+    [!INCLUDE [dev-tenant-send-mail](./includes/dev-tenant-send-mail.md)]
 
 ## Code explained
 
