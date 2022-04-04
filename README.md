@@ -1,4 +1,4 @@
-# Build .NET apps with Microsoft Graph
+# Build .NET apps with Microsoft Graph - Completed project
 
 This sample will introduce you to working with the Microsoft Graph SDK to access data in Microsoft 365 from .NET applications. This code is the result of completing the [.NET Microsoft Graph tutorial](https://docs.microsoft.com/graph/tutorials/dotnet).
 
