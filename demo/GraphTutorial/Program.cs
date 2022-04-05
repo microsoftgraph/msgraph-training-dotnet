@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 // <ProgramSnippet>
-Console.WriteLine(".NET Core Graph Tutorial\n");
+Console.WriteLine(".NET Graph Tutorial\n");
 
 var settings = Settings.LoadSettings();
 
@@ -191,10 +191,10 @@ async Task ListUsersAsync()
             Console.WriteLine($"  Email: {user.Mail ?? "NO EMAIL"}");
         }
 
-        // If NextPageRequest is not null, there are more messages
+        // If NextPageRequest is not null, there are more users
         // available on the server
         // Access the next page like:
-        // messagePage.NextPageRequest.GetAsync();
+        // userPage.NextPageRequest.GetAsync();
         var moreAvailable = userPage.NextPageRequest != null;
 
         Console.WriteLine($"\nMore users available? {moreAvailable}");
