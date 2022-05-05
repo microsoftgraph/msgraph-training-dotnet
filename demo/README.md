@@ -13,6 +13,8 @@ If you don't have a Microsoft account, you can [sign up for the Microsoft 365 De
 
 You can register an application using the Azure Active Directory admin center, or by using the [Microsoft Graph PowerShell SDK](https://docs.microsoft.com/graph/powershell/get-started).
 
+**NOTE:** If you downloaded this code from [https://developer.microsoft.com/graph/quick-start](https://developer.microsoft.com/graph/quick-start), an app registration has already been created for you. However, if you want to use the app-only portion of this sample, you will need to modify the app registration as specified in [Configure app-only auth (AAD admin center)](#configure-app-only-auth-aad-admin-center) or [Configure app-only auth (PowerShell)](#configure-app-only-auth-powershell).
+
 ### Azure Active Directory admin center
 
 1. Open a browser and navigate to the [Azure Active Directory admin center](https://aad.portal.azure.com) and login using a **personal account** (aka: Microsoft Account) or **Work or School Account**.

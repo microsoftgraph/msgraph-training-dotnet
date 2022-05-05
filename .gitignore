@@ -331,3 +331,4 @@ ASALocalRun/
 
 .vscode/
 appsettings.Development.json
+*.zip
