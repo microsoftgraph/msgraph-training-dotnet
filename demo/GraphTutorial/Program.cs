@@ -1,270 +1,214 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+// <ProgramSnippet>
+Console.WriteLine(".NET Graph Tutorial\n");
 
-namespace GraphTutorial
+var settings = Settings.LoadSettings();
+
+// Initialize Graph
+InitializeGraph(settings);
+
+// Greet the user by name
+await GreetUserAsync();
+
+int choice = -1;
+
+while (choice != 0)
 {
-    class Program
+    Console.WriteLine("Please choose one of the following options:");
+    Console.WriteLine("0. Exit");
+    Console.WriteLine("1. Display access token");
+    Console.WriteLine("2. List my inbox");
+    Console.WriteLine("3. Send mail");
+    Console.WriteLine("4. List users (requires app-only)");
+    Console.WriteLine("5. Make a Graph call");
+
+    try
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine(".NET Core Graph Tutorial\n");
+        choice = int.Parse(Console.ReadLine() ?? string.Empty);
+    }
+    catch (System.FormatException)
+    {
+        // Set to invalid value
+        choice = -1;
+    }
 
-            // <InitializationSnippet>
-            var appConfig = LoadAppSettings();
-
-            if (appConfig == null)
-            {
-                Console.WriteLine("Missing or invalid appsettings.json...exiting");
-                return;
-            }
-
-            var appId = appConfig["appId"];
-            var scopesString = appConfig["scopes"];
-            var scopes = scopesString.Split(';');
-
-            // Initialize Graph client
-            GraphHelper.Initialize(appId, scopes, (code, cancellation) => {
-                Console.WriteLine(code.Message);
-                return Task.FromResult(0);
-            });
-
-            var accessToken = GraphHelper.GetAccessTokenAsync(scopes).Result;
-            // </InitializationSnippet>
-
-            // <GetUserSnippet>
-            // Get signed in user
-            var user = GraphHelper.GetMeAsync().Result;
-            Console.WriteLine($"Welcome {user.DisplayName}!\n");
-
-            // Check for timezone and date/time formats in mailbox settings
-            // Use defaults if absent
-            var userTimeZone = !string.IsNullOrEmpty(user.MailboxSettings?.TimeZone) ?
-                user.MailboxSettings?.TimeZone : TimeZoneInfo.Local.StandardName;
-            var userDateFormat = !string.IsNullOrEmpty(user.MailboxSettings?.DateFormat) ?
-                user.MailboxSettings?.DateFormat : CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
-            var userTimeFormat = !string.IsNullOrEmpty(user.MailboxSettings?.TimeFormat) ?
-                user.MailboxSettings?.TimeFormat : CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
-            // </GetUserSnippet>
-
-            int choice = -1;
-
-            while (choice != 0) {
-                Console.WriteLine("Please choose one of the following options:");
-                Console.WriteLine("0. Exit");
-                Console.WriteLine("1. Display access token");
-                Console.WriteLine("2. View this week's calendar");
-                Console.WriteLine("3. Add an event");
-
-                try
-                {
-                    choice = int.Parse(Console.ReadLine());
-                }
-                catch (System.FormatException)
-                {
-                    // Set to invalid value
-                    choice = -1;
-                }
-
-                switch(choice)
-                {
-                    case 0:
-                        // Exit the program
-                        Console.WriteLine("Goodbye...");
-                        break;
-                    case 1:
-                        // Display access token
-                        Console.WriteLine($"Access token: {accessToken}\n");
-                        break;
-                    case 2:
-                        // List the calendar
-                        ListCalendarEvents(
-                            userTimeZone,
-                            $"{userDateFormat} {userTimeFormat}"
-                        );
-                        break;
-                    case 3:
-                        // Create a new event
-                        CreateEvent(userTimeZone);
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice! Please try again.");
-                        break;
-                }
-            }
-        }
-
-        // <ListEventsSnippet>
-        static void ListCalendarEvents(string userTimeZone, string dateTimeFormat)
-        {
-            var events = GraphHelper
-                .GetCurrentWeekCalendarViewAsync(DateTime.Today, userTimeZone)
-                .Result;
-
-            Console.WriteLine("Events:");
-
-            foreach (var calendarEvent in events)
-            {
-                Console.WriteLine($"Subject: {calendarEvent.Subject}");
-                Console.WriteLine($"  Organizer: {calendarEvent.Organizer.EmailAddress.Name}");
-                Console.WriteLine($"  Start: {FormatDateTimeTimeZone(calendarEvent.Start, dateTimeFormat)}");
-                Console.WriteLine($"  End: {FormatDateTimeTimeZone(calendarEvent.End, dateTimeFormat)}");
-            }
-        }
-        // </ListEventsSnippet>
-
-        // <FormatDateSnippet>
-        static string FormatDateTimeTimeZone(
-            Microsoft.Graph.DateTimeTimeZone value,
-            string dateTimeFormat)
-        {
-            // Parse the date/time string from Graph into a DateTime
-            var dateTime = DateTime.Parse(value.DateTime);
-
-            return dateTime.ToString(dateTimeFormat);
-        }
-        // </FormatDateSnippet>
-
-        // <CreateEventSnippet>
-        static void CreateEvent(string userTimeZone)
-        {
-            // Prompt user for info
-
-            // Require a subject
-            var subject = GetUserInput("subject", true,
-                (input) => {
-                    return GetUserYesNo($"Subject: {input} - is that right?");
-                });
-
-            // Attendees are optional
-            var attendeeList = new List<string>();
-            if (GetUserYesNo("Do you want to invite attendees?"))
-            {
-                string attendee = null;
-
-                do
-                {
-                    attendee = GetUserInput("attendee", false,
-                        (input) => {
-                            return GetUserYesNo($"{input} - add attendee?");
-                        });
-
-                    if (!string.IsNullOrEmpty(attendee))
-                    {
-                        attendeeList.Add(attendee);
-                    }
-                }
-                while (!string.IsNullOrEmpty(attendee));
-            }
-
-            var startString = GetUserInput("event start", true,
-                (input) => {
-                    // Validate that input is a date
-                    return (DateTime.TryParse(input, out var result));
-                });
-
-            var start = DateTime.Parse(startString);
-
-            var endString = GetUserInput("event end", true,
-                (input) => {
-                    // Validate that input is a date
-                    // and is later than start
-                    return (DateTime.TryParse(input, out var result) &&
-                        result.CompareTo(start) > 0);
-                });
-
-            var end = DateTime.Parse(endString);
-
-            var body = GetUserInput("body", false,
-                (input => { return true; }));
-
-            Console.WriteLine($"Subject: {subject}");
-            Console.WriteLine($"Attendees: {string.Join(";", attendeeList)}");
-            Console.WriteLine($"Start: {start.ToString()}");
-            Console.WriteLine($"End: {end.ToString()}");
-            Console.WriteLine($"Body: {body}");
-            if (GetUserYesNo("Create event?"))
-            {
-                GraphHelper.CreateEvent(
-                    userTimeZone,
-                    subject,
-                    start,
-                    end,
-                    attendeeList,
-                    body).Wait();
-            }
-            else
-            {
-                Console.WriteLine("Canceled.");
-            }
-        }
-        // </CreateEventSnippet>
-
-        // <UserInputSnippet>
-        static bool GetUserYesNo(string prompt)
-        {
-            Console.Write($"{prompt} (y/n)");
-            ConsoleKeyInfo confirm;
-            do
-            {
-                confirm = Console.ReadKey(true);
-            }
-            while (confirm.Key != ConsoleKey.Y && confirm.Key != ConsoleKey.N);
-
-            Console.WriteLine();
-            return (confirm.Key == ConsoleKey.Y);
-        }
-
-        static string GetUserInput(
-            string fieldName,
-            bool isRequired,
-            Func<string, bool> validate)
-        {
-            string returnValue = null;
-            do
-            {
-                Console.Write($"Enter a {fieldName}: ");
-                if (!isRequired)
-                {
-                    Console.Write("(ENTER to skip) ");
-                }
-                var input = Console.ReadLine();
-
-                if (!string.IsNullOrEmpty(input))
-                {
-                    if (validate.Invoke(input))
-                    {
-                        returnValue = input;
-                    }
-                }
-            }
-            while (string.IsNullOrEmpty(returnValue) && isRequired);
-
-            return returnValue;
-        }
-        // </UserInputSnippet>
-
-        // <LoadAppSettingsSnippet>
-        static IConfigurationRoot LoadAppSettings()
-        {
-            var appConfig = new ConfigurationBuilder()
-                .AddUserSecrets<Program>()
-                .Build();
-
-            // Check for required settings
-            if (string.IsNullOrEmpty(appConfig["appId"]) ||
-                string.IsNullOrEmpty(appConfig["scopes"]))
-            {
-                return null;
-            }
-
-            return appConfig;
-        }
-        // </LoadAppSettingsSnippet>
+    switch(choice)
+    {
+        case 0:
+            // Exit the program
+            Console.WriteLine("Goodbye...");
+            break;
+        case 1:
+            // Display access token
+            await DisplayAccessTokenAsync();
+            break;
+        case 2:
+            // List emails from user's inbox
+            await ListInboxAsync();
+            break;
+        case 3:
+            // Send an email message
+            await SendMailAsync();
+            break;
+        case 4:
+            // List users
+            await ListUsersAsync();
+            break;
+        case 5:
+            // Run any Graph code
+            await MakeGraphCallAsync();
+            break;
+        default:
+            Console.WriteLine("Invalid choice! Please try again.");
+            break;
     }
 }
+// </ProgramSnippet>
+
+// <InitializeGraphSnippet>
+void InitializeGraph(Settings settings)
+{
+    GraphHelper.InitializeGraphForUserAuth(settings,
+        (info, cancel) =>
+        {
+            // Display the device code message to
+            // the user. This tells them
+            // where to go to sign in and provides the
+            // code to use.
+            Console.WriteLine(info.Message);
+            return Task.FromResult(0);
+        });
+}
+// </InitializeGraphSnippet>
+
+// <GreetUserSnippet>
+async Task GreetUserAsync()
+{
+    try
+    {
+        var user = await GraphHelper.GetUserAsync();
+        Console.WriteLine($"Hello, {user?.DisplayName}!");
+        // For Work/school accounts, email is in Mail property
+        // Personal accounts, email is in UserPrincipalName
+        Console.WriteLine($"Email: {user?.Mail ?? user?.UserPrincipalName ?? ""}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error getting user: {ex.Message}");
+    }
+}
+// </GreetUserSnippet>
+
+// <DisplayAccessTokenSnippet>
+async Task DisplayAccessTokenAsync()
+{
+    try
+    {
+        var userToken = await GraphHelper.GetUserTokenAsync();
+        Console.WriteLine($"User token: {userToken}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error getting user access token: {ex.Message}");
+    }
+}
+// </DisplayAccessTokenSnippet>
+
+// <ListInboxSnippet>
+async Task ListInboxAsync()
+{
+    try
+    {
+        var messagePage = await GraphHelper.GetInboxAsync();
+
+        // Output each message's details
+        foreach (var message in messagePage.CurrentPage)
+        {
+            Console.WriteLine($"Message: {message.Subject ?? "NO SUBJECT"}");
+            Console.WriteLine($"  From: {message.From?.EmailAddress?.Name}");
+            Console.WriteLine($"  Status: {(message.IsRead!.Value ? "Read" : "Unread")}");
+            Console.WriteLine($"  Received: {message.ReceivedDateTime?.ToLocalTime().ToString()}");
+        }
+
+        // If NextPageRequest is not null, there are more messages
+        // available on the server
+        // Access the next page like:
+        // messagePage.NextPageRequest.GetAsync();
+        var moreAvailable = messagePage.NextPageRequest != null;
+
+        Console.WriteLine($"\nMore messages available? {moreAvailable}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error getting user's inbox: {ex.Message}");
+    }
+}
+// </ListInboxSnippet>
+
+// <SendMailSnippet>
+async Task SendMailAsync()
+{
+    try
+    {
+        // Send mail to the signed-in user
+        // Get the user for their email address
+        var user = await GraphHelper.GetUserAsync();
+
+        var userEmail = user?.Mail ?? user?.UserPrincipalName;
+
+        if (string.IsNullOrEmpty(userEmail))
+        {
+            Console.WriteLine("Couldn't get your email address, canceling...");
+            return;
+        }
+
+        await GraphHelper.SendMailAsync("Testing Microsoft Graph",
+            "Hello world!", userEmail);
+
+        Console.WriteLine("Mail sent.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error sending mail: {ex.Message}");
+    }
+}
+// </SendMailSnippet>
+
+// <ListUsersSnippet>
+async Task ListUsersAsync()
+{
+    try
+    {
+        var userPage = await GraphHelper.GetUsersAsync();
+
+        // Output each users's details
+        foreach (var user in userPage.CurrentPage)
+        {
+            Console.WriteLine($"User: {user.DisplayName ?? "NO NAME"}");
+            Console.WriteLine($"  ID: {user.Id}");
+            Console.WriteLine($"  Email: {user.Mail ?? "NO EMAIL"}");
+        }
+
+        // If NextPageRequest is not null, there are more users
+        // available on the server
+        // Access the next page like:
+        // userPage.NextPageRequest.GetAsync();
+        var moreAvailable = userPage.NextPageRequest != null;
+
+        Console.WriteLine($"\nMore users available? {moreAvailable}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error getting users: {ex.Message}");
+    }
+}
+// </ListUsersSnippet>
+
+// <MakeGraphCallSnippet>
+async Task MakeGraphCallAsync()
+{
+    await GraphHelper.MakeGraphCallAsync();
+}
+// </MakeGraphCallSnippet>

@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 
 .vscode/
+appsettings.Development.json
+*.zip

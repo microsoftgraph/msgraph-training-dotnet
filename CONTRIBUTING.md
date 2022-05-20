@@ -6,13 +6,13 @@ Thank you for contributing to this project! Before submitting your pull request,
 
 The code in this repository serves three purposes:
 
-- The Markdown files in the [tutorial](/tutorial) folder are published as a tutorial on the [Microsoft Graph tutorials](https://docs.microsoft.com/graph/tutorials) page.
+- Code inside the [demo](/demo) folder is referenced directly by a tutorial on the [Microsoft Graph tutorials](https://docs.microsoft.com/graph/tutorials) page.
 - The sample project in the [demo](/demo) folder is the source for a [Microsoft Graph quick start](https://developer.microsoft.com/graph/quick-start).**\***
 - The sample project in the demo folder is also downloadable directly from GitHub and should run as-is after some simple configuration.
 
 > **\*** Not all training repositories are available as quick starts (yet).
 
-This is important to keep in mind, because changes in one place *may* require changes in another, to keep things in sync. Whereever possible, the Markdown files refer to the source code files directly (using a custom `:::code` syntax), so that updating code in source will automatically update the code in Markdown.
+This is important to keep in mind, because changes in one place *may* require changes in another, to keep things in sync. When possible, the Markdown files refer to the source code files directly (using a custom `:::code` syntax), so that updating code in source will automatically update the code in Markdown.
 
 ## Updating code
 
@@ -32,11 +32,11 @@ While the enthusiasm is appreciated, please don't send pull requests to add new 
 
 ## Submitting pull requests
 
-Please submit all pull requests to the `master` branch.
+Please submit all pull requests to the `main` branch.
 
 ## When do changes get published?
 
-Publishing of updates to the [Microsoft Graph tutorials](https://docs.microsoft.com/graph/tutorials) site is not automatic. Changes must first be promoted to the `live` branch, then a build must be triggered by the site admins. This is typically done on an "as-needed" basis.
+Publishing of updates in this repository to the [Microsoft Graph tutorials](https://docs.microsoft.com/graph/tutorials) site is not automatic. Changes must first be promoted to the `live` branch, then a build must be triggered by the site admins. This is typically done on an "as-needed" basis.
 
 ## Code of conduct
 
