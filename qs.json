@@ -1,0 +1,7 @@
+{
+    "sourceDirectory": "./demo",
+    "exampleConfigFile": "./GraphTutorial/appsettings.json",
+    "configFile": "appsettings.json",
+    "archiveFile": "DotnetQuickStart.zip",
+    "zipReadMe": "./README.md"
+}
