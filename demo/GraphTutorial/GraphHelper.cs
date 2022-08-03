@@ -143,10 +143,15 @@ class GraphHelper
         _ = _settings ??
             throw new System.NullReferenceException("Settings cannot be null");
 
+        if (!_settings.AppOnly?.EnableAppOnly ?? false)
+        {
+            return;
+        }
+
         if (_clientSecretCredential == null)
         {
             _clientSecretCredential = new ClientSecretCredential(
-                _settings.TenantId, _settings.ClientId, _settings.ClientSecret);
+                _settings.AppOnly?.TenantId, _settings.ClientId, _settings.AppOnly?.ClientSecret);
         }
 
         if (_appClient == null)
@@ -195,6 +200,7 @@ class GraphHelper
         // Note: if using _appClient, be sure to call EnsureGraphForAppOnlyAuth
         // before using it.
         // EnsureGraphForAppOnlyAuth();
+        Console.WriteLine("Add your own Graph code here.");
     }
     // </MakeGraphCallSnippet>
 }

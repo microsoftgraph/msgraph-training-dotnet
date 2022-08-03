@@ -3,5 +3,9 @@
     "exampleConfigFile": "./GraphTutorial/appsettings.json",
     "configFile": "appsettings.json",
     "archiveFile": "DotnetQuickStart.zip",
-    "zipReadMe": "./README.md"
+    "zipReadMe": "./README.md",
+    "excludeFiles": [
+        "BASIC-CONFIG.md",
+        "RegisterAppForUserAuth.ps1"
+    ]
 }

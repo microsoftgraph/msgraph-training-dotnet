@@ -53,8 +53,15 @@ while (choice != 0)
             await SendMailAsync();
             break;
         case 4:
-            // List users
-            await ListUsersAsync();
+            if (settings.AppOnly?.EnableAppOnly ?? false)
+            {
+                // List users
+                await ListUsersAsync();
+            }
+            else
+            {
+                Console.WriteLine("App-only features are not enabled.");
+            }
             break;
         case 5:
             // Run any Graph code
