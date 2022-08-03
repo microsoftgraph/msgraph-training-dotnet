@@ -5,7 +5,7 @@
     "archiveFile": "DotnetQuickStart.zip",
     "zipReadMe": "./README.md",
     "excludeFiles": [
-        "BASIC-CONFIG.md",
-        "RegisterAppForUserAuth.ps1"
+        "demo/BASIC-CONFIG.md",
+        "demo/RegisterAppForUserAuth.ps1"
     ]
 }
