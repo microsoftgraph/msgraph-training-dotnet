@@ -11,11 +11,11 @@ If you don't have a Microsoft account, you can [sign up for the Microsoft 365 De
 
 ## Configure the sample for user authentication
 
-Instructions for user authentication configuration are located in [BASIC-CONFIG.md](BASIC-CONFIG.md).
+The majority of this sample uses user authentication and [delegated permissions](https://docs.microsoft.com/graph/auth/auth-concepts#delegated-and-application-permissions). Instructions for user authentication configuration are located in [BASIC-CONFIG.md](BASIC-CONFIG.md).
 
 ## Enable app-only authentication
 
-By default this sample disables the app-only authentication portion. This is because this portion requires access to a work/school account with administrative privileges. For instructions to configure and enable app-only authentication, see [APP-ONLY-CONFIG.md](APP-ONLY-CONFIG.md).
+By default this sample disables the app-only authentication portion. This is because this app-only authentication requires access to a work/school account with administrative privileges. For instructions to configure and enable app-only authentication with [application permissions](https://docs.microsoft.com/graph/auth/auth-concepts#delegated-and-application-permissions), see [APP-ONLY-CONFIG.md](APP-ONLY-CONFIG.md).
 
 ## Build and run the sample
 
