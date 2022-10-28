@@ -21,8 +21,7 @@ while (choice != 0)
     Console.WriteLine("1. Display access token");
     Console.WriteLine("2. List my inbox");
     Console.WriteLine("3. Send mail");
-    Console.WriteLine("4. List users (requires app-only)");
-    Console.WriteLine("5. Make a Graph call");
+    Console.WriteLine("4. Make a Graph call");
 
     try
     {
@@ -53,10 +52,6 @@ while (choice != 0)
             await SendMailAsync();
             break;
         case 4:
-            // List users
-            await ListUsersAsync();
-            break;
-        case 5:
             // Run any Graph code
             await MakeGraphCallAsync();
             break;
@@ -175,36 +170,6 @@ async Task SendMailAsync()
     }
 }
 // </SendMailSnippet>
-
-// <ListUsersSnippet>
-async Task ListUsersAsync()
-{
-    try
-    {
-        var userPage = await GraphHelper.GetUsersAsync();
-
-        // Output each users's details
-        foreach (var user in userPage.CurrentPage)
-        {
-            Console.WriteLine($"User: {user.DisplayName ?? "NO NAME"}");
-            Console.WriteLine($"  ID: {user.Id}");
-            Console.WriteLine($"  Email: {user.Mail ?? "NO EMAIL"}");
-        }
-
-        // If NextPageRequest is not null, there are more users
-        // available on the server
-        // Access the next page like:
-        // userPage.NextPageRequest.GetAsync();
-        var moreAvailable = userPage.NextPageRequest != null;
-
-        Console.WriteLine($"\nMore users available? {moreAvailable}");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error getting users: {ex.Message}");
-    }
-}
-// </ListUsersSnippet>
 
 // <MakeGraphCallSnippet>
 async Task MakeGraphCallAsync()

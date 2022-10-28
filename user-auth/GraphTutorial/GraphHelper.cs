@@ -7,7 +7,6 @@ using Microsoft.Graph;
 
 class GraphHelper
 {
-    #region User-auth
     // <UserAuthConfigSnippet>
     // Settings object
     private static Settings? _settings;
@@ -22,7 +21,7 @@ class GraphHelper
         _settings = settings;
 
         _deviceCodeCredential = new DeviceCodeCredential(deviceCodePrompt,
-            settings.AuthTenant, settings.ClientId);
+            settings.TenantId, settings.ClientId);
 
         _userClient = new GraphServiceClient(_deviceCodeCredential, settings.GraphUserScopes);
     }
@@ -128,62 +127,6 @@ class GraphHelper
             .PostAsync();
     }
     // </SendMailSnippet>
-    #endregion
-
-    #region App-only
-    // <AppOnyAuthConfigSnippet>
-    // App-ony auth token credential
-    private static ClientSecretCredential? _clientSecretCredential;
-    // Client configured with app-only authentication
-    private static GraphServiceClient? _appClient;
-
-    private static void EnsureGraphForAppOnlyAuth()
-    {
-        // Ensure settings isn't null
-        _ = _settings ??
-            throw new System.NullReferenceException("Settings cannot be null");
-
-        if (_clientSecretCredential == null)
-        {
-            _clientSecretCredential = new ClientSecretCredential(
-                _settings.TenantId, _settings.ClientId, _settings.ClientSecret);
-        }
-
-        if (_appClient == null)
-        {
-            _appClient = new GraphServiceClient(_clientSecretCredential,
-                // Use the default scope, which will request the scopes
-                // configured on the app registration
-                new[] {"https://graph.microsoft.com/.default"});
-        }
-    }
-    // </AppOnyAuthConfigSnippet>
-
-    // <GetUsersSnippet>
-    public static Task<IGraphServiceUsersCollectionPage> GetUsersAsync()
-    {
-        EnsureGraphForAppOnlyAuth();
-        // Ensure client isn't null
-        _ = _appClient ??
-            throw new System.NullReferenceException("Graph has not been initialized for app-only auth");
-
-        return _appClient.Users
-            .Request()
-            .Select(u => new
-            {
-                // Only request specific properties
-                u.DisplayName,
-                u.Id,
-                u.Mail
-            })
-            // Get at most 25 results
-            .Top(25)
-            // Sort by display name
-            .OrderBy("DisplayName")
-            .GetAsync();
-    }
-    // </GetUsersSnippet>
-    #endregion
 
     #pragma warning disable CS1998
     // <MakeGraphCallSnippet>
@@ -192,9 +135,6 @@ class GraphHelper
     public async static Task MakeGraphCallAsync()
     {
         // INSERT YOUR CODE HERE
-        // Note: if using _appClient, be sure to call EnsureGraphForAppOnlyAuth
-        // before using it.
-        // EnsureGraphForAppOnlyAuth();
     }
     // </MakeGraphCallSnippet>
 }

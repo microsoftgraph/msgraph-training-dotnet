@@ -1,7 +1,10 @@
 {
-    "sourceDirectory": "./demo",
+    "sourceDirectory": "./user-auth",
     "exampleConfigFile": "./GraphTutorial/appsettings.json",
     "configFile": "appsettings.json",
     "archiveFile": "DotnetQuickStart.zip",
-    "zipReadMe": "./README.md"
+    "zipReadMe": "./README.md",
+    "excludeFiles": [
+        "user-auth/RegisterAppForUserAuth.ps1"
+    ]
 }
