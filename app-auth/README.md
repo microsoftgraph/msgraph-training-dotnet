@@ -61,7 +61,7 @@ To use PowerShell, you'll need the Microsoft Graph PowerShell SDK. If you do not
     SUCCESS
     Client ID: ae2386e6-799e-4f75-b191-855d7e691c75
     Tenant ID: 5927c10a-91bd-4408-9c70-c50bce922b71
-    Client secret: 4XR8Q~JVkLPGAKkitHVTa2FTI2c38CPhnngzFapw
+    Client secret: ...
     Secret expires: 10/28/2024 5:01:45 PM
     ```
 
