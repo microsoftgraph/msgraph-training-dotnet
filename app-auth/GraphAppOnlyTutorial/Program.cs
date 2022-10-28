@@ -16,7 +16,7 @@ while (choice != 0)
     Console.WriteLine("Please choose one of the following options:");
     Console.WriteLine("0. Exit");
     Console.WriteLine("1. Display access token");
-    Console.WriteLine("2. List users (requires app-only)");
+    Console.WriteLine("2. List users");
     Console.WriteLine("3. Make a Graph call");
 
     try
