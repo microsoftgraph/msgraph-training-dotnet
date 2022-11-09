@@ -25,7 +25,7 @@ You can register an application using the Azure Active Directory admin center, o
 
 1. Leave **Redirect URI** empty.
 
-1. Select **Register**. On the application's **Overview** page, copy the value of the **Application (client) ID**  and **Directory (tenant) ID** and save them, you will need these values in the next step.
+1. Select **Register**. On the application's **Overview** page, copy the value of the **Application (client) ID** and **Directory (tenant) ID** and save them, you will need these values in the next step.
 
 1. Select **API permissions** under **Manage**.
 
