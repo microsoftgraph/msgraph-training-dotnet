@@ -11,7 +11,7 @@ If you don't have a Microsoft account, you can [sign up for the Microsoft 365 De
 
 ## Register an application
 
-You can register an application using the Azure Active Directory admin center, or by using the [Microsoft Graph PowerShell SDK](https://docs.microsoft.com/graph/powershell/get-started).
+You can register an application using the Azure Active Directory admin center, or by using the [Microsoft Graph PowerShell SDK](https://learn.microsoft.com/graph/powershell/get-started).
 
 ### Azure Active Directory admin center
 
@@ -47,7 +47,7 @@ You can register an application using the Azure Active Directory admin center, o
 
 ### PowerShell
 
-To use PowerShell, you'll need the Microsoft Graph PowerShell SDK. If you do not have it, see [Install the Microsoft Graph PowerShell SDK](https://docs.microsoft.com/graph/powershell/installation) for installation instructions.
+To use PowerShell, you'll need the Microsoft Graph PowerShell SDK. If you do not have it, see [Install the Microsoft Graph PowerShell SDK](https://learn.microsoft.com/graph/powershell/installation) for installation instructions.
 
 1. Open PowerShell and run the [RegisterAppForAppOnlyAuth.ps1](RegisterAppForAppOnlyAuth.ps1) file with the following command.
 
@@ -74,7 +74,7 @@ To use PowerShell, you'll need the Microsoft Graph PowerShell SDK. If you do not
     | `clientId` | The client ID of your app registration |
     | `tenantId` | The tenant ID of your organization |
 
-1. Initialize the [.NET development secret store](https://docs.microsoft.com/aspnet/core/security/app-secrets) by opening your CLI in the directory that contains **GraphTutorial.csproj** and running the following command.
+1. Initialize the [.NET development secret store](https://learn.microsoft.com/aspnet/core/security/app-secrets) by opening your CLI in the directory that contains **GraphTutorial.csproj** and running the following command.
 
     ```Shell
     dotnet user-secrets init
@@ -86,7 +86,7 @@ To use PowerShell, you'll need the Microsoft Graph PowerShell SDK. If you do not
     dotnet user-secrets set settings:clientSecret <client-secret>
     ```
 
-    > **Note:** The .NET Secret Manager is only available during development. Production apps should store client secrets in a secure store, such as [Azure Key Vault](https://docs.microsoft.com/azure/key-vault/general/overview).
+    > **Note:** The .NET Secret Manager is only available during development. Production apps should store client secrets in a secure store, such as [Azure Key Vault](https://learn.microsoft.com/azure/key-vault/general/overview).
 
 ## Run the sample
 
