@@ -18,14 +18,14 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      working-directory: /user-auth/GraphTutorial/
+      working-directory: user-auth/GraphTutorial/
       run: dotnet restore
     - name: Build
-      working-directory: /user-auth/GraphTutorial/
+      working-directory: user-auth/GraphTutorial/
       run: dotnet build --no-restore
     - name: Restore dependencies
-      working-directory: /app-auth/GraphAppOnlyTutorial/
+      working-directory: app-auth/GraphAppOnlyTutorial/
       run: dotnet restore
     - name: Build
-      working-directory: /app-auth/GraphAppOnlyTutorial/
+      working-directory: app-auth/GraphAppOnlyTutorial/
       run: dotnet build --no-restore
