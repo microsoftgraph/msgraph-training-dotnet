@@ -4,9 +4,9 @@
 # <ScriptBody>
 param(
   [Parameter(Mandatory=$true,
-  HelpMessage="The app ID of the app registration")]
+  HelpMessage="The friendly name of the app registration")]
   [String]
-  $AppId,
+  $AppName,
 
   [Parameter(Mandatory=$true,
   HelpMessage="The application permission scopes to configure on the app registration")]
@@ -21,15 +21,27 @@ param(
 $graphAppId = "00000003-0000-0000-c000-000000000000"
 
 # Requires an admin
-Connect-MgGraph -Scopes "Application.ReadWrite.All AppRoleAssignment.ReadWrite.All User.Read" `
- -UseDeviceAuthentication -ErrorAction Stop
+Connect-MgGraph -Scopes "Application.ReadWrite.All User.Read" -UseDeviceAuthentication -ErrorAction Stop
 
 # Get context for access to tenant ID
 $context = Get-MgContext -ErrorAction Stop
+$authTenant = $context.TenantId
 
-# Get the application and service principal
-$appRegistration = Get-MgApplication -Filter ("appId eq '" + $AppId +"'") -ErrorAction Stop
-$appServicePrincipal = Get-MgServicePrincipal -Filter ("appId eq '" + $AppId + "'") -ErrorAction Stop
+# Create app registration
+$appRegistration = New-MgApplication -DisplayName $AppName -SignInAudience "AzureADMyOrg" -ErrorAction Stop
+Write-Host -ForegroundColor Cyan "App registration created with app ID" $appRegistration.AppId
+
+# Create corresponding service principal
+$appServicePrincipal = New-MgServicePrincipal -AppId $appRegistration.AppId -ErrorAction SilentlyContinue `
+  -ErrorVariable SPError
+if ($SPError)
+{
+  Write-Host -ForegroundColor Red "A service principal for the app could not be created."
+  Write-Host -ForegroundColor Red $SPError
+  Exit
+}
+
+Write-Host -ForegroundColor Cyan "Service principal created"
 
 # Lookup available Graph application permissions
 $graphServicePrincipal = Get-MgServicePrincipal -Filter ("appId eq '" + $graphAppId + "'") -ErrorAction Stop
@@ -59,6 +71,7 @@ Write-Host -ForegroundColor Cyan "Added application permissions to app registrat
 # Add admin consent
 foreach ($appRole in $resourceAccess)
 {
+  $appServicePrincipal
   New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $appServicePrincipal.Id `
    -PrincipalId $appServicePrincipal.Id -ResourceId $graphServicePrincipal.Id `
    -AppRoleId $appRole.Id -ErrorAction SilentlyContinue -ErrorVariable SPError | Out-Null
@@ -77,8 +90,10 @@ $clientSecret = Add-MgApplicationPassword -ApplicationId $appRegistration.Id -Pa
 
 Write-Host
 Write-Host -ForegroundColor Green "SUCCESS"
+Write-Host -ForegroundColor Cyan -NoNewline "Client ID: "
+Write-Host -ForegroundColor Yellow $appRegistration.AppId
 Write-Host -ForegroundColor Cyan -NoNewline "Tenant ID: "
-Write-Host -ForegroundColor Yellow $context.TenantId
+Write-Host -ForegroundColor Yellow $authTenant
 Write-Host -ForegroundColor Cyan -NoNewline "Client secret: "
 Write-Host -ForegroundColor Yellow $clientSecret.SecretText
 Write-Host -ForegroundColor Cyan -NoNewline "Secret expires: "

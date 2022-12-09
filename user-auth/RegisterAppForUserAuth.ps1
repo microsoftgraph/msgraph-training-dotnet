@@ -21,7 +21,7 @@ param(
 )
 
 # Tenant to use in authentication.
-# See https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code#device-authorization-request
+# See https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code#device-authorization-request
 $authTenant = switch ($SignInAudience)
 {
   "AzureADMyOrg" { "tenantId" }

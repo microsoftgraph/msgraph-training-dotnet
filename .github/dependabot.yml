@@ -6,6 +6,10 @@
 version: 2
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/demo/GraphTutorial/" # Location of package manifests
+    directory: "/user-auth/GraphTutorial/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "nuget" # See documentation for possible values
+    directory: "/app-auth/GraphAppOnlyTutorial/" # Location of package manifests
     schedule:
       interval: "weekly"
