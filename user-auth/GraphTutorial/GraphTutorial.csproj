@@ -19,7 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Graph" Version="4.50.0" />
+    <PackageReference Include="Microsoft.Graph" Version="4.51.0" />
   </ItemGroup>
 
 </Project>
