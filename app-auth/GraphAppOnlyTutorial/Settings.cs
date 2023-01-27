@@ -22,7 +22,8 @@ public class Settings
             .AddUserSecrets<Program>()
             .Build();
 
-        return config.GetRequiredSection("Settings").Get<Settings>();
+        return config.GetRequiredSection("Settings").Get<Settings>() ??
+            throw new Exception("Could not load app settings. See README for configuration instructions.");
     }
 }
 // </SettingsSnippet>
