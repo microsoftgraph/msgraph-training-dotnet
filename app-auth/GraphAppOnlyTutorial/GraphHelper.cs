@@ -35,8 +35,8 @@ class GraphHelper
         {
             _appClient = new GraphServiceClient(_clientSecretCredential,
                 // Use the default scope, which will request the scopes
-                // configured on the app registration
-                new[] {"https://graph.microsoft.com/.default"});
+                // configured on the app registration,
+                _settings.GraphAppScopes);
         }
     }
     // </AppOnlyAuthConfigSnippet>
@@ -49,7 +49,7 @@ class GraphHelper
             throw new System.NullReferenceException("Graph has not been initialized for app-only auth");
 
         // Request token with given scopes
-        var context = new TokenRequestContext(new[] {"https://graph.microsoft.com/.default"});
+        var context = new TokenRequestContext(_settings.GraphAppScopes);
         var response = await _clientSecretCredential.GetTokenAsync(context);
         return response.Token;
     }

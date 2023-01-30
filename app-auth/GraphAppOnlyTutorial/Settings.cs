@@ -9,6 +9,7 @@ public class Settings
     public string? ClientId { get; set; }
     public string? ClientSecret { get; set; }
     public string? TenantId { get; set; }
+     public string[]? GraphAppScopes { get; set; }
 
     public static Settings LoadSettings()
     {
