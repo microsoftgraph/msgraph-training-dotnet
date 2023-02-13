@@ -24,7 +24,10 @@
 	// }
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "dotnet restore"
+	"postCreateCommand": [
+		"dotnet restore ./user-auth/GraphTutorial/GraphTutorial.csproj",
+		"dotnet restore ./app-auth/GraphAppOnlyTutorial/GraphAppOnlyTutorial.csproj"
+	]
 
 	// Configure tool-specific properties.
 	// "customizations": {},
