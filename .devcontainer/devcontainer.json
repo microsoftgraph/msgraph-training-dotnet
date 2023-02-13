@@ -9,6 +9,11 @@
 			"extensions": [
 				"ms-dotnettools.csharp"
 			]
+		},
+		"codespaces": {
+			"openFiles": [
+				"./user-auth/README.md"
+			]
 		}
 	},
 
