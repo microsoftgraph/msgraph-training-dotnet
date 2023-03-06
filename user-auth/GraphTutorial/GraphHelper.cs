@@ -4,6 +4,10 @@
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Graph;
+using Microsoft.Graph.Models;
+using Microsoft.Graph.Me;
+using Microsoft.Graph.Me.MailFolders.Item.Messages;
+using Microsoft.Graph.Me.SendMail;
 
 class GraphHelper
 {
@@ -45,27 +49,22 @@ class GraphHelper
     // </GetUserTokenSnippet>
 
     // <GetUserSnippet>
-    public static Task<User> GetUserAsync()
+    public static Task<User?> GetUserAsync()
     {
         // Ensure client isn't null
         _ = _userClient ??
             throw new System.NullReferenceException("Graph has not been initialized for user auth");
 
-        return _userClient.Me
-            .Request()
-            .Select(u => new
-            {
-                // Only request specific properties
-                u.DisplayName,
-                u.Mail,
-                u.UserPrincipalName
-            })
-            .GetAsync();
+        return _userClient.Me.GetAsync((config) =>
+        {
+            // Only request specific properties
+            config.QueryParameters.Select = new[] {"displayName", "mail", "userPrincipalName" };
+        });
     }
     // </GetUserSnippet>
 
     // <GetInboxSnippet>
-    public static Task<IMailFolderMessagesCollectionPage> GetInboxAsync()
+    public static Task<MessageCollectionResponse?> GetInboxAsync()
     {
         // Ensure client isn't null
         _ = _userClient ??
@@ -75,20 +74,18 @@ class GraphHelper
             // Only messages from Inbox folder
             .MailFolders["Inbox"]
             .Messages
-            .Request()
-            .Select(m => new
+            .GetAsync((config) =>
             {
-                // Only request specific properties
-                m.From,
-                m.IsRead,
-                m.ReceivedDateTime,
-                m.Subject
-            })
-            // Get at most 25 results
-            .Top(25)
-            // Sort by received time, newest first
-            .OrderBy("ReceivedDateTime DESC")
-            .GetAsync();
+                config.QueryParameters = new MessagesRequestBuilder.MessagesRequestBuilderGetQueryParameters
+                {
+                    // Only request specific properties
+                    Select = new[] { "from", "isRead", "receivedDateTime", "subject" },
+                    // Get at most 25 results
+                    Top = 25,
+                    // Sort by received time, newest first
+                    Orderby = new[] { "receivedDateTime DESC" },
+                };
+            });
     }
     // </GetInboxSnippet>
 
@@ -108,7 +105,7 @@ class GraphHelper
                 Content = body,
                 ContentType = BodyType.Text
             },
-            ToRecipients = new Recipient[]
+            ToRecipients = new List<Recipient>
             {
                 new Recipient
                 {
@@ -122,9 +119,11 @@ class GraphHelper
 
         // Send the message
         await _userClient.Me
-            .SendMail(message)
-            .Request()
-            .PostAsync();
+            .SendMail
+            .PostAsync(new SendMailPostRequestBody
+            {
+                Message = message
+            });
     }
     // </SendMailSnippet>
 
