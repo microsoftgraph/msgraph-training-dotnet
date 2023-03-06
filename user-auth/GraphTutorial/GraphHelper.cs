@@ -5,8 +5,6 @@ using Azure.Core;
 using Azure.Identity;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
-using Microsoft.Graph.Me;
-using Microsoft.Graph.Me.MailFolders.Item.Messages;
 using Microsoft.Graph.Me.SendMail;
 
 class GraphHelper
@@ -76,15 +74,12 @@ class GraphHelper
             .Messages
             .GetAsync((config) =>
             {
-                config.QueryParameters = new MessagesRequestBuilder.MessagesRequestBuilderGetQueryParameters
-                {
-                    // Only request specific properties
-                    Select = new[] { "from", "isRead", "receivedDateTime", "subject" },
-                    // Get at most 25 results
-                    Top = 25,
-                    // Sort by received time, newest first
-                    Orderby = new[] { "receivedDateTime DESC" },
-                };
+                // Only request specific properties
+                config.QueryParameters.Select = new[] { "from", "isRead", "receivedDateTime", "subject" };
+                // Get at most 25 results
+                config.QueryParameters.Top = 25;
+                // Sort by received time, newest first
+                config.QueryParameters.Orderby = new[] { "receivedDateTime DESC" };
             });
     }
     // </GetInboxSnippet>
