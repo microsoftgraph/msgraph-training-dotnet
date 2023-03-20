@@ -118,8 +118,14 @@ async Task ListInboxAsync()
     {
         var messagePage = await GraphHelper.GetInboxAsync();
 
+        if (messagePage?.Value == null)
+        {
+            Console.WriteLine("No results returned.");
+            return;
+        }
+
         // Output each message's details
-        foreach (var message in messagePage.CurrentPage)
+        foreach (var message in messagePage.Value)
         {
             Console.WriteLine($"Message: {message.Subject ?? "NO SUBJECT"}");
             Console.WriteLine($"  From: {message.From?.EmailAddress?.Name}");
@@ -130,8 +136,9 @@ async Task ListInboxAsync()
         // If NextPageRequest is not null, there are more messages
         // available on the server
         // Access the next page like:
-        // messagePage.NextPageRequest.GetAsync();
-        var moreAvailable = messagePage.NextPageRequest != null;
+        // var nextPageRequest = new MessagesRequestBuilder(messagePage.OdataNextLink, _userClient.RequestAdapter);
+        // var nextPage = await nextPageRequest.GetAsync();
+        var moreAvailable = !string.IsNullOrEmpty(messagePage.OdataNextLink);
 
         Console.WriteLine($"\nMore messages available? {moreAvailable}");
     }
