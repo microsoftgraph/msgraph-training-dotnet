@@ -22,8 +22,14 @@ class GraphHelper
     {
         _settings = settings;
 
-        _deviceCodeCredential = new DeviceCodeCredential(deviceCodePrompt,
-            settings.TenantId, settings.ClientId);
+        var options = new DeviceCodeCredentialOptions
+        {
+            ClientId = settings.ClientId,
+            TenantId = settings.TenantId,
+            DeviceCodeCallback = deviceCodePrompt,
+        };
+
+        _deviceCodeCredential = new DeviceCodeCredential(options);
 
         _userClient = new GraphServiceClient(_deviceCodeCredential, settings.GraphUserScopes);
     }
