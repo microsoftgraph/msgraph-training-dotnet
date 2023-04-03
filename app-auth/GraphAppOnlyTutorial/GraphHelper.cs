@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Graph;
+using Microsoft.Graph.Models;
 
 class GraphHelper
 {
@@ -56,26 +57,21 @@ class GraphHelper
     // </GetAppOnlyTokenSnippet>
 
     // <GetUsersSnippet>
-    public static Task<IGraphServiceUsersCollectionPage> GetUsersAsync()
+    public static Task<UserCollectionResponse?> GetUsersAsync()
     {
         // Ensure client isn't null
         _ = _appClient ??
             throw new System.NullReferenceException("Graph has not been initialized for app-only auth");
 
-        return _appClient.Users
-            .Request()
-            .Select(u => new
-            {
-                // Only request specific properties
-                u.DisplayName,
-                u.Id,
-                u.Mail
-            })
+        return _appClient.Users.GetAsync((config) =>
+        {
+            // Only request specific properties
+            config.QueryParameters.Select = new[] { "displayName", "id", "mail" };
             // Get at most 25 results
-            .Top(25)
+            config.QueryParameters.Top = 25;
             // Sort by display name
-            .OrderBy("DisplayName")
-            .GetAsync();
+            config.QueryParameters.Orderby = new[] { "displayName" };
+        });
     }
     // </GetUsersSnippet>
 

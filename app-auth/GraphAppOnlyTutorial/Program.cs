@@ -83,8 +83,14 @@ async Task ListUsersAsync()
     {
         var userPage = await GraphHelper.GetUsersAsync();
 
+        if (userPage?.Value == null)
+        {
+            Console.WriteLine("No results returned.");
+            return;
+        }
+
         // Output each users's details
-        foreach (var user in userPage.CurrentPage)
+        foreach (var user in userPage.Value)
         {
             Console.WriteLine($"User: {user.DisplayName ?? "NO NAME"}");
             Console.WriteLine($"  ID: {user.Id}");
@@ -94,8 +100,9 @@ async Task ListUsersAsync()
         // If NextPageRequest is not null, there are more users
         // available on the server
         // Access the next page like:
-        // userPage.NextPageRequest.GetAsync();
-        var moreAvailable = userPage.NextPageRequest != null;
+        // var nextPageRequest = new UsersRequestBuilder(userPage.OdataNextLink, _appClient.RequestAdapter);
+        // var nextPage = await nextPageRequest.GetAsync();
+        var moreAvailable = !string.IsNullOrEmpty(userPage.OdataNextLink);
 
         Console.WriteLine($"\nMore users available? {moreAvailable}");
     }
