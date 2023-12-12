@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build user-auth",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/user-auth/GraphTutorial/bin/Debug/net7.0/GraphTutorial.dll",
+            "program": "${workspaceFolder}/user-auth/GraphTutorial/bin/Debug/net8.0/GraphTutorial.dll",
             "args": [],
             "cwd": "${workspaceFolder}/user-auth/GraphTutorial",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -26,7 +26,7 @@
             "request": "launch",
             "preLaunchTask": "build app-auth",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/app-auth/GraphAppOnlyTutorial/bin/Debug/net7.0/GraphAppOnlyTutorial.dll",
+            "program": "${workspaceFolder}/app-auth/GraphAppOnlyTutorial/bin/Debug/net8.0/GraphAppOnlyTutorial.dll",
             "args": [],
             "cwd": "${workspaceFolder}/app-auth/GraphAppOnlyTutorial",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
