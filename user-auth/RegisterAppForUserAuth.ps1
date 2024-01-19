@@ -77,7 +77,7 @@ Write-Host -ForegroundColor Yellow $authTenant
 
 if ($StayConnected -eq $false)
 {
-  Disconnect-MgGraph
+  Disconnect-MgGraph | Out-Null
   Write-Host "Disconnected from Microsoft Graph"
 }
 else
