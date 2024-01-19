@@ -21,7 +21,7 @@ param(
 $graphAppId = "00000003-0000-0000-c000-000000000000"
 
 # Requires an admin
-Connect-MgGraph -Scopes "Application.ReadWrite.All User.Read" -UseDeviceAuthentication -ErrorAction Stop
+Connect-MgGraph -Scopes "Application.ReadWrite.All AppRoleAssignment.ReadWrite.All User.Read" -UseDeviceAuthentication -ErrorAction Stop
 
 # Get context for access to tenant ID
 $context = Get-MgContext -ErrorAction Stop
@@ -71,7 +71,6 @@ Write-Host -ForegroundColor Cyan "Added application permissions to app registrat
 # Add admin consent
 foreach ($appRole in $resourceAccess)
 {
-  $appServicePrincipal
   New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $appServicePrincipal.Id `
    -PrincipalId $appServicePrincipal.Id -ResourceId $graphServicePrincipal.Id `
    -AppRoleId $appRole.Id -ErrorAction SilentlyContinue -ErrorVariable SPError | Out-Null
@@ -101,7 +100,7 @@ Write-Host -ForegroundColor Yellow $clientSecret.EndDateTime
 
 if ($StayConnected -eq $false)
 {
-  Disconnect-MgGraph
+  Disconnect-MgGraph | Out-Null
   Write-Host "Disconnected from Microsoft Graph"
 }
 else
