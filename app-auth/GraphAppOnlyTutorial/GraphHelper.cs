@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
 using Azure.Core;
@@ -6,82 +6,81 @@ using Azure.Identity;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
 
-class GraphHelper
+namespace GraphAppOnlyTutorial;
+
+public class GraphHelper
 {
-    // <AppOnlyAuthConfigSnippet>
+    /* <AppOnlyAuthConfigSnippet> */
     // Settings object
-    private static Settings? _settings;
+    private static Settings? settings;
+
     // App-ony auth token credential
-    private static ClientSecretCredential? _clientSecretCredential;
+    private static ClientSecretCredential? clientSecretCredential;
+
     // Client configured with app-only authentication
-    private static GraphServiceClient? _appClient;
+    private static GraphServiceClient? appClient;
 
     public static void InitializeGraphForAppOnlyAuth(Settings settings)
     {
-        _settings = settings;
+        GraphHelper.settings = settings;
 
         // Ensure settings isn't null
         _ = settings ??
-            throw new System.NullReferenceException("Settings cannot be null");
+            throw new NullReferenceException("Settings cannot be null");
 
-        _settings = settings;
+        GraphHelper.settings = settings;
 
-        if (_clientSecretCredential == null)
-        {
-            _clientSecretCredential = new ClientSecretCredential(
-                _settings.TenantId, _settings.ClientId, _settings.ClientSecret);
-        }
+        clientSecretCredential ??= new ClientSecretCredential(
+                GraphHelper.settings.TenantId, GraphHelper.settings.ClientId, GraphHelper.settings.ClientSecret);
 
-        if (_appClient == null)
-        {
-            _appClient = new GraphServiceClient(_clientSecretCredential,
-                // Use the default scope, which will request the scopes
-                // configured on the app registration
-                new[] {"https://graph.microsoft.com/.default"});
-        }
+        appClient ??= new GraphServiceClient(
+                clientSecretCredential,
+                /* Use the default scope, which will request the scopes
+                   configured on the app registration */
+                ["https://graph.microsoft.com/.default"]);
     }
-    // </AppOnlyAuthConfigSnippet>
+    /* </AppOnlyAuthConfigSnippet> */
 
-    // <GetAppOnlyTokenSnippet>
+    /* <GetAppOnlyTokenSnippet> */
     public static async Task<string> GetAppOnlyTokenAsync()
     {
         // Ensure credential isn't null
-        _ = _clientSecretCredential ??
-            throw new System.NullReferenceException("Graph has not been initialized for app-only auth");
+        _ = clientSecretCredential ??
+            throw new NullReferenceException("Graph has not been initialized for app-only auth");
 
         // Request token with given scopes
-        var context = new TokenRequestContext(new[] {"https://graph.microsoft.com/.default"});
-        var response = await _clientSecretCredential.GetTokenAsync(context);
+        var context = new TokenRequestContext(["https://graph.microsoft.com/.default"]);
+        var response = await clientSecretCredential.GetTokenAsync(context);
         return response.Token;
     }
-    // </GetAppOnlyTokenSnippet>
+    /* </GetAppOnlyTokenSnippet> */
 
-    // <GetUsersSnippet>
+    /* <GetUsersSnippet> */
     public static Task<UserCollectionResponse?> GetUsersAsync()
     {
         // Ensure client isn't null
-        _ = _appClient ??
-            throw new System.NullReferenceException("Graph has not been initialized for app-only auth");
+        _ = appClient ??
+            throw new NullReferenceException("Graph has not been initialized for app-only auth");
 
-        return _appClient.Users.GetAsync((config) =>
+        return appClient.Users.GetAsync((config) =>
         {
-            // Only request specific properties
-            config.QueryParameters.Select = new[] { "displayName", "id", "mail" };
-            // Get at most 25 results
+            /* Only request specific properties */
+            config.QueryParameters.Select = ["displayName", "id", "mail"];
+            /* Get at most 25 results */
             config.QueryParameters.Top = 25;
-            // Sort by display name
-            config.QueryParameters.Orderby = new[] { "displayName" };
+            /* Sort by display name */
+            config.QueryParameters.Orderby = ["displayName"];
         });
     }
-    // </GetUsersSnippet>
+    /* </GetUsersSnippet> */
 
-    #pragma warning disable CS1998
-    // <MakeGraphCallSnippet>
-    // This function serves as a playground for testing Graph snippets
-    // or other code
-    public async static Task MakeGraphCallAsync()
+#pragma warning disable CS1998
+    /* <MakeGraphCallSnippet> */
+    /* This function serves as a playground for testing Graph snippets
+       or other code */
+    public static async Task MakeGraphCallAsync()
     {
         // INSERT YOUR CODE HERE
     }
-    // </MakeGraphCallSnippet>
+    /* </MakeGraphCallSnippet> */
 }
