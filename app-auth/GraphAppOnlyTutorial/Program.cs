@@ -1,7 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// <ProgramSnippet>
+/* <ProgramSnippet> */
+using GraphAppOnlyTutorial;
+
 Console.WriteLine(".NET Graph App-only Tutorial\n");
 
 var settings = Settings.LoadSettings();
@@ -29,7 +31,7 @@ while (choice != 0)
         choice = -1;
     }
 
-    switch(choice)
+    switch (choice)
     {
         case 0:
             // Exit the program
@@ -52,16 +54,16 @@ while (choice != 0)
             break;
     }
 }
-// </ProgramSnippet>
+/* </ProgramSnippet> */
 
-// <InitializeGraphSnippet>
+/* <InitializeGraphSnippet> */
 void InitializeGraph(Settings settings)
 {
     GraphHelper.InitializeGraphForAppOnlyAuth(settings);
 }
-// </InitializeGraphSnippet>
+/* </InitializeGraphSnippet> */
 
-// <DisplayAccessTokenSnippet>
+/* <DisplayAccessTokenSnippet> */
 async Task DisplayAccessTokenAsync()
 {
     try
@@ -74,9 +76,9 @@ async Task DisplayAccessTokenAsync()
         Console.WriteLine($"Error getting app-only access token: {ex.Message}");
     }
 }
-// </DisplayAccessTokenSnippet>
+/* </DisplayAccessTokenSnippet> */
 
-// <ListUsersSnippet>
+/* <ListUsersSnippet> */
 async Task ListUsersAsync()
 {
     try
@@ -111,11 +113,11 @@ async Task ListUsersAsync()
         Console.WriteLine($"Error getting users: {ex.Message}");
     }
 }
-// </ListUsersSnippet>
+/* </ListUsersSnippet> */
 
-// <MakeGraphCallSnippet>
+/* <MakeGraphCallSnippet> */
 async Task MakeGraphCallAsync()
 {
     await GraphHelper.MakeGraphCallAsync();
 }
-// </MakeGraphCallSnippet>
+/* </MakeGraphCallSnippet> */
