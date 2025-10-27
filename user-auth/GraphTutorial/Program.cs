@@ -1,7 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// <ProgramSnippet>
+/* <ProgramSnippet> */
+using GraphTutorial;
+
 Console.WriteLine(".NET Graph Tutorial\n");
 
 var settings = Settings.LoadSettings();
@@ -33,7 +35,7 @@ while (choice != 0)
         choice = -1;
     }
 
-    switch(choice)
+    switch (choice)
     {
         case 0:
             // Exit the program
@@ -60,12 +62,13 @@ while (choice != 0)
             break;
     }
 }
-// </ProgramSnippet>
+/* </ProgramSnippet> */
 
-// <InitializeGraphSnippet>
+/* <InitializeGraphSnippet> */
 void InitializeGraph(Settings settings)
 {
-    GraphHelper.InitializeGraphForUserAuth(settings,
+    GraphHelper.InitializeGraphForUserAuth(
+        settings,
         (info, cancel) =>
         {
             // Display the device code message to
@@ -76,27 +79,28 @@ void InitializeGraph(Settings settings)
             return Task.FromResult(0);
         });
 }
-// </InitializeGraphSnippet>
+/* </InitializeGraphSnippet> */
 
-// <GreetUserSnippet>
+/* <GreetUserSnippet> */
 async Task GreetUserAsync()
 {
     try
     {
         var user = await GraphHelper.GetUserAsync();
         Console.WriteLine($"Hello, {user?.DisplayName}!");
+
         // For Work/school accounts, email is in Mail property
         // Personal accounts, email is in UserPrincipalName
-        Console.WriteLine($"Email: {user?.Mail ?? user?.UserPrincipalName ?? ""}");
+        Console.WriteLine($"Email: {user?.Mail ?? user?.UserPrincipalName ?? string.Empty}");
     }
     catch (Exception ex)
     {
         Console.WriteLine($"Error getting user: {ex.Message}");
     }
 }
-// </GreetUserSnippet>
+/* </GreetUserSnippet> */
 
-// <DisplayAccessTokenSnippet>
+/* <DisplayAccessTokenSnippet> */
 async Task DisplayAccessTokenAsync()
 {
     try
@@ -109,9 +113,9 @@ async Task DisplayAccessTokenAsync()
         Console.WriteLine($"Error getting user access token: {ex.Message}");
     }
 }
-// </DisplayAccessTokenSnippet>
+/* </DisplayAccessTokenSnippet> */
 
-// <ListInboxSnippet>
+/* <ListInboxSnippet> */
 async Task ListInboxAsync()
 {
     try
@@ -147,9 +151,9 @@ async Task ListInboxAsync()
         Console.WriteLine($"Error getting user's inbox: {ex.Message}");
     }
 }
-// </ListInboxSnippet>
+/* </ListInboxSnippet> */
 
-// <SendMailSnippet>
+/* <SendMailSnippet> */
 async Task SendMailAsync()
 {
     try
@@ -166,8 +170,10 @@ async Task SendMailAsync()
             return;
         }
 
-        await GraphHelper.SendMailAsync("Testing Microsoft Graph",
-            "Hello world!", userEmail);
+        await GraphHelper.SendMailAsync(
+            "Testing Microsoft Graph",
+            "Hello world!",
+            userEmail);
 
         Console.WriteLine("Mail sent.");
     }
@@ -176,11 +182,11 @@ async Task SendMailAsync()
         Console.WriteLine($"Error sending mail: {ex.Message}");
     }
 }
-// </SendMailSnippet>
+/* </SendMailSnippet> */
 
-// <MakeGraphCallSnippet>
+/* <MakeGraphCallSnippet> */
 async Task MakeGraphCallAsync()
 {
     await GraphHelper.MakeGraphCallAsync();
 }
-// </MakeGraphCallSnippet>
+/* </MakeGraphCallSnippet> */
