@@ -10,7 +10,7 @@ namespace GraphAppOnlyTutorial;
 
 public class GraphHelper
 {
-    /* <AppOnlyAuthConfigSnippet> */
+    // <AppOnlyAuthConfigSnippet>
     // Settings object
     private static Settings? settings;
 
@@ -39,9 +39,9 @@ public class GraphHelper
                    configured on the app registration */
                 ["https://graph.microsoft.com/.default"]);
     }
-    /* </AppOnlyAuthConfigSnippet> */
+    // </AppOnlyAuthConfigSnippet>
 
-    /* <GetAppOnlyTokenSnippet> */
+    // <GetAppOnlyTokenSnippet>
     public static async Task<string> GetAppOnlyTokenAsync()
     {
         // Ensure credential isn't null
@@ -53,9 +53,9 @@ public class GraphHelper
         var response = await clientSecretCredential.GetTokenAsync(context);
         return response.Token;
     }
-    /* </GetAppOnlyTokenSnippet> */
+    // </GetAppOnlyTokenSnippet>
 
-    /* <GetUsersSnippet> */
+    // <GetUsersSnippet>
     public static Task<UserCollectionResponse?> GetUsersAsync()
     {
         // Ensure client isn't null
@@ -72,15 +72,15 @@ public class GraphHelper
             config.QueryParameters.Orderby = ["displayName"];
         });
     }
-    /* </GetUsersSnippet> */
+    // </GetUsersSnippet>
 
 #pragma warning disable CS1998
-    /* <MakeGraphCallSnippet> */
+    // <MakeGraphCallSnippet>
     /* This function serves as a playground for testing Graph snippets
        or other code */
     public static async Task MakeGraphCallAsync()
     {
         // INSERT YOUR CODE HERE
     }
-    /* </MakeGraphCallSnippet> */
+    // </MakeGraphCallSnippet>
 }
