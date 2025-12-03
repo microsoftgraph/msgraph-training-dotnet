@@ -11,7 +11,7 @@ namespace GraphTutorial;
 
 public class GraphHelper
 {
-    /* <UserAuthConfigSnippet> */
+    // <UserAuthConfigSnippet>
     // Settings object
     private static Settings? settings;
 
@@ -38,9 +38,9 @@ public class GraphHelper
 
         userClient = new GraphServiceClient(deviceCodeCredential, settings.GraphUserScopes);
     }
-    /* </UserAuthConfigSnippet> */
+    // </UserAuthConfigSnippet>
 
-    /* <GetUserTokenSnippet> */
+    // <GetUserTokenSnippet>
     public static async Task<string> GetUserTokenAsync()
     {
         // Ensure credential isn't null
@@ -55,9 +55,9 @@ public class GraphHelper
         var response = await deviceCodeCredential.GetTokenAsync(context);
         return response.Token;
     }
-    /* </GetUserTokenSnippet> */
+    // </GetUserTokenSnippet>
 
-    /* <GetUserSnippet> */
+    // <GetUserSnippet>
     public static Task<User?> GetUserAsync()
     {
         // Ensure client isn't null
@@ -70,9 +70,9 @@ public class GraphHelper
             config.QueryParameters.Select = ["displayName", "mail", "userPrincipalName"];
         });
     }
-    /* </GetUserSnippet> */
+    // </GetUserSnippet>
 
-    /* <GetInboxSnippet> */
+    // <GetInboxSnippet>
     public static Task<MessageCollectionResponse?> GetInboxAsync()
     {
         // Ensure client isn't null
@@ -92,9 +92,9 @@ public class GraphHelper
                 config.QueryParameters.Orderby = ["receivedDateTime DESC"];
             });
     }
-    /* </GetInboxSnippet> */
+    // </GetInboxSnippet>
 
-    /* <SendMailSnippet> */
+    // <SendMailSnippet>
     public static async Task SendMailAsync(string subject, string body, string recipient)
     {
         // Ensure client isn't null
@@ -130,15 +130,15 @@ public class GraphHelper
                 Message = message,
             });
     }
-    /* </SendMailSnippet> */
+    // </SendMailSnippet>
 
 #pragma warning disable CS1998
-    /* <MakeGraphCallSnippet> */
+    // <MakeGraphCallSnippet>
     /* This function serves as a playground for testing Graph snippets */
     /* or other code */
     public static async Task MakeGraphCallAsync()
     {
         // INSERT YOUR CODE HERE
     }
-    /* </MakeGraphCallSnippet> */
+    // </MakeGraphCallSnippet>
 }

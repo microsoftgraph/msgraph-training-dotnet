@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* <SettingsSnippet> */
+// cSpell:ignore appsettings
+
+// <SettingsSnippet>
 using Microsoft.Extensions.Configuration;
 
 namespace GraphTutorial;
@@ -30,4 +32,4 @@ public class Settings
             throw new Exception("Could not load app settings. See README for configuration instructions.");
     }
 }
-/* </SettingsSnippet> */
+// </SettingsSnippet>

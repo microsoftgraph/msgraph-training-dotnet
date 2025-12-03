@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* <ProgramSnippet> */
+// <ProgramSnippet>
 using GraphTutorial;
 
 Console.WriteLine(".NET Graph Tutorial\n");
@@ -62,9 +62,9 @@ while (choice != 0)
             break;
     }
 }
-/* </ProgramSnippet> */
+// </ProgramSnippet>
 
-/* <InitializeGraphSnippet> */
+// <InitializeGraphSnippet>
 void InitializeGraph(Settings settings)
 {
     GraphHelper.InitializeGraphForUserAuth(
@@ -79,9 +79,9 @@ void InitializeGraph(Settings settings)
             return Task.FromResult(0);
         });
 }
-/* </InitializeGraphSnippet> */
+// </InitializeGraphSnippet>
 
-/* <GreetUserSnippet> */
+// <GreetUserSnippet>
 async Task GreetUserAsync()
 {
     try
@@ -98,9 +98,9 @@ async Task GreetUserAsync()
         Console.WriteLine($"Error getting user: {ex.Message}");
     }
 }
-/* </GreetUserSnippet> */
+// </GreetUserSnippet>
 
-/* <DisplayAccessTokenSnippet> */
+// <DisplayAccessTokenSnippet>
 async Task DisplayAccessTokenAsync()
 {
     try
@@ -113,9 +113,9 @@ async Task DisplayAccessTokenAsync()
         Console.WriteLine($"Error getting user access token: {ex.Message}");
     }
 }
-/* </DisplayAccessTokenSnippet> */
+// </DisplayAccessTokenSnippet>
 
-/* <ListInboxSnippet> */
+// <ListInboxSnippet>
 async Task ListInboxAsync()
 {
     try
@@ -151,9 +151,9 @@ async Task ListInboxAsync()
         Console.WriteLine($"Error getting user's inbox: {ex.Message}");
     }
 }
-/* </ListInboxSnippet> */
+// </ListInboxSnippet>
 
-/* <SendMailSnippet> */
+// <SendMailSnippet>
 async Task SendMailAsync()
 {
     try
@@ -182,11 +182,11 @@ async Task SendMailAsync()
         Console.WriteLine($"Error sending mail: {ex.Message}");
     }
 }
-/* </SendMailSnippet> */
+// </SendMailSnippet>
 
-/* <MakeGraphCallSnippet> */
+// <MakeGraphCallSnippet>
 async Task MakeGraphCallAsync()
 {
     await GraphHelper.MakeGraphCallAsync();
 }
-/* </MakeGraphCallSnippet> */
+// </MakeGraphCallSnippet>
