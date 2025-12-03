@@ -3,7 +3,7 @@
 
 // cSpell:ignore appsettings
 
-/* <SettingsSnippet> */
+// <SettingsSnippet>
 using Microsoft.Extensions.Configuration;
 
 namespace GraphAppOnlyTutorial;
